@@ -97,3 +97,15 @@ for normal development.
 Dependencies should be managed through the project’s Python dependency configuration.
 If dependency changes are needed, update the appropriate project files and include the
 reason in the pull request.
+
+## Testing
+
+```bash
+uv sync
+make check
+uv run pelican content -s pelicanconf.py -o output
+cd output
+python -m http.server 8000
+cd ..
+rm -rf output
+```
