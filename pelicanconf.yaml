@@ -1,0 +1,28 @@
+site:
+  name: Apache Sourcelume
+  description: Open source infrastructure for AI training-data provenance.
+  domain: sourcelume.apache.org
+  logo: https://www.apache.org/img/asf_logo.png
+  repository: https://github.com/apache/sourcelume-site/blob/main/content/
+  trademarks: Apache and the Apache feather logo are trademarks of The Apache Software Foundation.
+theme: content/theme
+setup:
+  ignore:
+    - theme
+  postrun:
+    - /bin/bash pagefind.sh
+plugins:
+  use:
+    - toc
+    - spu
+    - gfm
+content:
+  pages: pages
+  static:
+    - css
+    - js
+    - highlight
+    - images
+    - fonts
+genid:
+  unsafe: yes
