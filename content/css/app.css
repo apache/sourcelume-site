@@ -1,0 +1,446 @@
+/* Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       https://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License. */
+
+/* ==========================================================================
+   Apache Responsible AI - site styles
+   Layered on top of Bootstrap 5.2.2. No build step, no webfont CDN.
+   ========================================================================== */
+
+:root {
+  /* Accent. Swap these two values to retheme the whole site.
+     ASF red is the default; #1c4f80 / #153c62 (slate) and
+     #0f6e56 / #0b5342 (teal) are drop-in alternatives. */
+  --sourcelume-accent:      #b21326;   /* logo crimson  */
+  --sourcelume-accent-dark: #8c0a22;   /* logo deep red */
+  --sourcelume-accent-soft: #6a0d28;   /* logo shadow   */
+  --sourcelume-highlight:   #f7931d;   /* logo acorn    */
+
+  --sourcelume-ink:      #15181d;
+  --sourcelume-body:     #3d4652;
+  --sourcelume-muted:    #5a6472;
+  --sourcelume-faint:    #7a838f;
+  --sourcelume-rule:     #e6e8ec;
+  --sourcelume-rule-soft:#eceef1;
+  --sourcelume-soft:     #f7f8fa;
+
+  --sourcelume-width:    44rem;  /* content column; rem not ch, so it does not
+                             shrink inside smaller-type blocks */
+  --sourcelume-nav-h:    62px;
+  --sourcelume-mark-h:   34px;   /* nav logo height; below ~28px the veins mush */
+
+  --sourcelume-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+              Arial, "Noto Sans", sans-serif;
+  --sourcelume-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+              "Liberation Mono", monospace;
+}
+
+/* --------------------------------------------------------------------------
+   Base typography
+   -------------------------------------------------------------------------- */
+
+body {
+  font-family: var(--sourcelume-sans);
+  font-size: 1.0625rem;          /* 17px */
+  line-height: 1.7;
+  color: var(--sourcelume-body);
+  background: #fff;
+  padding-top: var(--sourcelume-nav-h);  /* was 44px; navbar is taller than that */
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--sourcelume-ink);
+  font-weight: 500;
+  letter-spacing: -0.018em;
+  line-height: 1.25;
+}
+
+/* Anchor links must not land under the fixed navbar. Applies to any id
+   target, including the bare <a id> anchors used on what-we-do. */
+[id] { scroll-margin-top: calc(var(--sourcelume-nav-h) + 1rem); }
+
+h1 { font-size: 2.125rem; margin-bottom: 0.75rem; letter-spacing: -0.025em; }
+h2 { font-size: 1.5rem;   margin-top: 2.75rem; margin-bottom: 0.75rem; }
+h3 { font-size: 1.1875rem; margin-top: 2rem;   margin-bottom: 0.5rem; }
+h4 { font-size: 1.0625rem; margin-top: 1.75rem; margin-bottom: 0.5rem; }
+
+/* Page title gets a hairline under it; section headings do not. */
+#contents h1 {
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--sourcelume-rule);
+  margin-bottom: 1.5rem;
+}
+
+p { margin-bottom: 1.15rem; }
+
+strong, b { font-weight: 600; color: var(--sourcelume-ink); }
+
+a {
+  color: var(--sourcelume-accent-dark);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: rgba(140, 10, 34, 0.35);
+}
+a:hover {
+  color: var(--sourcelume-accent);
+  text-decoration-color: currentColor;
+}
+
+/* --------------------------------------------------------------------------
+   Layout - the single biggest readability fix
+   -------------------------------------------------------------------------- */
+
+#contents {
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+#contents > .bg-white {
+  max-width: var(--sourcelume-width);
+  margin: 0 auto;
+  padding: 0 !important;   /* neutralise the template's p-5 */
+}
+
+/* Wide elements are allowed to break the measure. */
+#contents table,
+#contents pre,
+#contents .mermaid,
+#contents img {
+  max-width: 100%;
+}
+
+@media (min-width: 992px) {
+  #contents { padding: 3.25rem 2rem 5rem; }
+}
+
+/* --------------------------------------------------------------------------
+   Navbar
+   -------------------------------------------------------------------------- */
+
+.navbar.sourcelume-nav {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: saturate(180%) blur(8px);
+  border-bottom: 1px solid var(--sourcelume-rule);
+  min-height: var(--sourcelume-nav-h);
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.navbar-brand { display: flex; align-items: center; gap: 0.6rem; }
+.navbar-brand img { height: var(--sourcelume-mark-h); width: auto; margin-left: 0 !important; }
+.navbar-brand span {
+  position: static !important;
+  top: auto !important;
+  margin-left: 0 !important;
+  font-weight: 500 !important;
+  font-size: 0.9375rem;
+  color: var(--sourcelume-ink);
+  letter-spacing: -0.01em;
+}
+
+.navbar-collapse {
+  position: static !important;
+  top: auto !important;
+  margin-left: 1.5rem !important;
+}
+
+.navbar .nav-link {
+  font-size: 0.9375rem;
+  color: var(--sourcelume-muted);
+  padding: 0.35rem 0.75rem;
+  border-bottom: 2px solid transparent;
+  text-decoration: none;
+}
+.navbar .nav-link:hover,
+.navbar .nav-link:focus { color: var(--sourcelume-ink); }
+.navbar .nav-link.active,
+.navbar .nav-item.active > .nav-link {
+  color: var(--sourcelume-ink);
+  border-bottom-color: var(--sourcelume-accent);
+}
+
+.dropdown-menu {
+  border: 1px solid var(--sourcelume-rule);
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(21, 24, 29, 0.08);
+  padding: 0.4rem;
+  font-size: 0.9375rem;
+}
+.dropdown-item {
+  border-radius: 5px;
+  padding: 0.4rem 0.65rem;
+  color: var(--sourcelume-body);
+  text-decoration: none;
+}
+.dropdown-item:hover { background: var(--sourcelume-soft); color: var(--sourcelume-ink); }
+
+/* Persistent support CTA in the navbar. */
+.sourcelume-support {
+  display: inline-block;
+  font-size: 0.875rem;
+  color: #fff !important;
+  background: var(--sourcelume-accent);
+  padding: 0.4rem 0.85rem;
+  border-radius: 6px;
+  text-decoration: none !important;
+  white-space: nowrap;
+}
+.sourcelume-support:hover { background: var(--sourcelume-accent-dark); color: #fff !important; }
+
+/* --------------------------------------------------------------------------
+   Prose elements
+   -------------------------------------------------------------------------- */
+
+blockquote {
+  border-left: 3px solid var(--sourcelume-accent);
+  padding-left: 1.15rem;
+  margin: 1.75rem 0;
+  color: #2b333d;
+  font-style: italic;
+}
+blockquote p:last-child { margin-bottom: 0; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  margin: 1.5rem 0 2rem;
+}
+th {
+  text-align: left;
+  font-weight: 500;
+  color: var(--sourcelume-ink);
+  padding: 0.6rem 1rem 0.6rem 0;
+  border-bottom: 1px solid #d7dbe1;
+  white-space: nowrap;
+}
+td {
+  padding: 0.7rem 1rem 0.7rem 0;
+  border-bottom: 1px solid var(--sourcelume-rule-soft);
+  vertical-align: top;
+  color: var(--sourcelume-muted);
+}
+td:first-child { color: var(--sourcelume-ink); }
+tr:last-child td { border-bottom: none; }
+
+ul, ol { margin-bottom: 1.15rem; padding-left: 1.3rem; }
+li { margin-bottom: 0.4rem; }
+li::marker { color: var(--sourcelume-faint); }
+
+code {
+  font-family: var(--sourcelume-mono);
+  font-size: 0.875em;
+  background: var(--sourcelume-soft);
+  border: 1px solid var(--sourcelume-rule);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+  color: var(--sourcelume-ink);
+}
+pre {
+  background: var(--sourcelume-soft);
+  border: 1px solid var(--sourcelume-rule);
+  border-radius: 8px;
+  padding: 1rem 1.15rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+pre code { background: none; border: none; padding: 0; font-size: 0.875rem; }
+
+hr { border: none; border-top: 1px solid var(--sourcelume-rule); margin: 2.5rem 0; }
+
+.mermaid {
+  margin: 1.75rem 0;
+  padding: 1.25rem;
+  background: #fff;
+  border: 1px solid var(--sourcelume-rule);
+  border-radius: 8px;
+}
+
+/* --------------------------------------------------------------------------
+   Home page
+   -------------------------------------------------------------------------- */
+
+.sourcelume-eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--sourcelume-accent-dark);
+  margin-bottom: 0.85rem;
+}
+
+.sourcelume-lede { font-size: 1.1875rem; line-height: 1.65; color: var(--sourcelume-body); }
+
+.sourcelume-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.9rem;
+  margin: 2.5rem 0;
+}
+.sourcelume-card {
+  border: 1px solid var(--sourcelume-rule);
+  border-radius: 9px;
+  padding: 1.15rem 1.25rem;
+  background: #fff;
+}
+.sourcelume-card h2,
+.sourcelume-card h3 { margin: 0 0 0.35rem; font-size: 1rem; letter-spacing: -0.01em; }
+.sourcelume-card p  { margin: 0; font-size: 0.9375rem; line-height: 1.6; color: var(--sourcelume-muted); }
+.sourcelume-card i  { color: var(--sourcelume-accent); font-size: 1.1rem; }
+
+
+/* Hero */
+.sourcelume-hero { margin-bottom: 2.5rem; }
+#contents .sourcelume-hero h1 {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 1rem;
+}
+.sourcelume-hero .sourcelume-eyebrow { margin-bottom: 0.85rem; }
+
+.sourcelume-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.75rem; }
+.sourcelume-btn {
+  display: inline-block;
+  font-size: 0.9375rem;
+  line-height: 1.2;
+  padding: 0.7rem 1.15rem;
+  border: 1px solid #d3d8e0;
+  border-radius: 6px;
+  color: var(--sourcelume-ink);
+  background: #fff;
+  text-decoration: none;
+}
+.sourcelume-btn:hover { background: var(--sourcelume-soft); color: var(--sourcelume-ink); border-color: #bfc6d0; }
+.sourcelume-btn-primary {
+  background: var(--sourcelume-ink);
+  border-color: var(--sourcelume-ink);
+  color: #fff;
+}
+.sourcelume-btn-primary:hover { background: #000; border-color: #000; color: #fff; }
+
+.sourcelume-meta { font-size: 0.875rem; color: var(--sourcelume-faint); margin-top: -0.5rem; }
+
+/* Mobile nav: the expanded collapse must be opaque, and the desktop
+   indent must not apply once items stack vertically. */
+@media (max-width: 991.98px) {
+  .navbar.sourcelume-nav {
+    background: #fff !important;
+    backdrop-filter: none;
+  }
+  .navbar-collapse {
+    margin-left: 0 !important;
+    background: #fff;
+    padding-bottom: 0.75rem;
+    max-height: calc(100vh - var(--sourcelume-nav-h));
+    overflow-y: auto;
+  }
+  .navbar .nav-link {
+    padding-left: 0;
+    border-bottom: none;
+  }
+  .navbar .nav-link.active { border-bottom: none; color: var(--sourcelume-accent-dark); }
+  .sourcelume-support { display: block; text-align: center; }
+  .dropdown-menu { border: none; box-shadow: none; padding-left: 0.5rem; }
+}
+
+/* Highlighted resource block (announcement + support links). */
+.sourcelume-resources {
+  background: var(--sourcelume-soft);
+  border: 1px solid var(--sourcelume-rule);
+  border-radius: 10px;
+  padding: 1.15rem 1.35rem;
+  margin: 2.25rem 0;
+}
+.sourcelume-resources ul { list-style: none; padding: 0; margin: 0; }
+.sourcelume-resources li { margin-bottom: 0.85rem; }
+.sourcelume-resources li:last-child { margin-bottom: 0; }
+.sourcelume-resources .sourcelume-note {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--sourcelume-muted);
+  margin-top: 0.1rem;
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+
+.sourcelume-footer {
+  border-top: 1px solid var(--sourcelume-rule);
+  margin-top: 4rem;
+  padding: 2.5rem 1.5rem 2rem;
+  background: #fff;
+}
+.sourcelume-footer-inner {
+  max-width: var(--sourcelume-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.75rem;
+}
+.sourcelume-footer h4 {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--sourcelume-ink);
+  margin: 0 0 0.65rem;
+  letter-spacing: 0;
+}
+.sourcelume-footer ul { list-style: none; padding: 0; margin: 0; }
+.sourcelume-footer li { margin-bottom: 0.35rem; }
+.sourcelume-footer a {
+  font-size: 0.875rem;
+  color: var(--sourcelume-muted);
+  text-decoration: none;
+}
+.sourcelume-footer a:hover { color: var(--sourcelume-ink); text-decoration: underline; }
+
+.sourcelume-legal {
+  max-width: var(--sourcelume-width);
+  margin: 2rem auto 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--sourcelume-rule-soft);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--sourcelume-faint);
+}
+.sourcelume-legal a { color: var(--sourcelume-faint); }
+
+/* --------------------------------------------------------------------------
+   Search + misc
+   -------------------------------------------------------------------------- */
+
+.search-form {
+  right: 0;
+  left: initial !important;
+  min-width: 25vw;
+  max-width: 90vw;
+  max-height: calc(95vh - 100px);
+  overflow: auto;
+  margin-top: 5px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--sourcelume-accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+
+@media (max-width: 768px) {
+  body { font-size: 1rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.3125rem; }
+  #contents { padding: 2rem 1.25rem 3rem; }
+}

@@ -1,0 +1,30 @@
+<link rel="icon" href="images/rai-mark.svg" type="image/svg+xml">
+<link rel="shortcut icon" href="https://apache.org/favicons/favicon.ico">
+<meta name="description" content="{{ SITEDESC }}">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/fontawesome.all.min.css" rel="stylesheet">
+<link href="css/headerlink.css" rel="stylesheet">
+<link href="css/app.css" rel="stylesheet">
+<link href="highlight/github.min.css" rel="stylesheet">
+<script src="highlight/highlight.min.js"></script>
+<script src="js/mermaid.min.js"></script>
+<!-- pagefind search -->
+<link href="_pagefind/pagefind-ui.css" rel="stylesheet">
+<script src="_pagefind/pagefind-ui.js"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+      new PagefindUI({ element: "#pagefind-search" });
+  });
+  var pageTitle = '';
+  if(pageTitle === '404'){
+      window.addEventListener('DOMContentLoaded', (event) => {
+          new PagefindUI({ element: "#page-404-search" });
+      });
+  }
+</script>
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: "default"
+  });
+</script>

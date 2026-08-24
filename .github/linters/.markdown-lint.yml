@@ -1,0 +1,40 @@
+# https://github.com/davidanson/markdownlint#rules--aliases
+
+MD003:
+  style: atx
+
+MD004:
+  style: consistent
+
+MD005:
+  indent: 2
+
+MD007: false
+
+MD013:
+  code_blocks: false
+  line_length: 915
+  tables: false
+
+# MD025/single-title/single-h1 Multiple top-level headings in the same document
+MD025: false
+
+MD028: false
+
+MD029: false
+
+MD033: false
+
+MD034: false
+
+MD035: consistent
+
+MD040: false
+
+# MD041/first-line-heading/first-line-h1 First line in a file should be a top-level heading
+MD041: false
+
+MD046: false
+
+# MD056/table-column-count Table column count
+MD056: false

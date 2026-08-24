@@ -1,0 +1,15 @@
+<!-- page contents -->
+<div id="contents">
+  <div class="bg-white rounded">
+    <div class="mx-auto">
+      {% if article %}
+      <h1>{{ article.title }}</h1>
+      <p class="rai-meta">Posted on {{ article.date }}</p>
+      {{ article.content }}
+      {% else %}
+      <h1>{{ page.title }}</h1>
+      {{ page.content }}
+      {% endif %}
+    </div>
+  </div>
+</div>
