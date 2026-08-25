@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apache Sourcelume</title>
+    <title>Community - Apache Sourcelume</title>
 <link rel="icon" href="images/rai-mark.svg" type="image/svg+xml">
 <link rel="shortcut icon" href="https://apache.org/favicons/favicon.ico">
 <meta name="description" content="Open source infrastructure for AI training-data provenance.">
@@ -92,61 +92,102 @@
 <div id="contents">
   <div class="bg-white rounded">
     <div class="mx-auto">
-      <div class="sourcelume-hero">
-<p class="sourcelume-eyebrow">Apache Sourcelume</p>
-<h1>Verifiable provenance for AI training data</h1>
-<p class="sourcelume-lede">Apache Sourcelume is open-source instrumentation for AI training-data
-provenance &mdash; a metadata specification, a reference registry, and tooling that let dataset
-curators and model producers publish signed, independently verifiable records of where their
-data came from and what terms it carries.</p>
-<p class="sourcelume-actions">
-<a class="sourcelume-btn sourcelume-btn-primary" href="get-involved.html">Get involved</a>
-</p>
-</div>
-<p>Most training corpora carry licensing and provenance information that is missing, wrong, or
-unverifiable &mdash; a 2024 audit found license-omission rates above 70% across popular dataset-hosting
-sites. Sourcelume doesn't adjudicate whether a dataset's stated terms are accurate; it gives
-producers a shared, neutral way to document custody and licensing so that claims can be checked
-independently.</p>
-<div class="sourcelume-cards">
-<div class="sourcelume-card">
-<h2>Specification</h2>
-<p>A versioned, JSON-LD metadata schema for dataset origin, custody chain, and licensing &mdash;
-built to align with OTDI, the DPI annotation taxonomy, Croissant, and the SPDX AI Profile rather
-than compete with them.</p>
-</div>
-<div class="sourcelume-card">
-<h2>Registry</h2>
-<p>A reference implementation built on Apache Atlas, exposing REST and GraphQL APIs so trainers and
-auditors can search, filter, and query provenance records at scale.</p>
-</div>
-<div class="sourcelume-card">
-<h2>Attestation</h2>
-<p>A signing and verification library &mdash; C2PA-compatible where applicable &mdash; that lets producers
-cryptographically sign what they assert, and lets anyone independently check the record's
-provenance.</p>
-</div>
-</div>
-<h2>Where to go next</h2>
+      <h1>Community</h1>
+      <h2>Providing changes in a pull request</h2>
+<p>The best way to contribute changes is to fork the relevant Apache Sourcelume repository on GitHub and open a pull request with your changes.</p>
+<p>Current Apache Sourcelume repositories include:</p>
+<ul>
+<li><a href="https://github.com/apache/sourcelume-site"><code>sourcelume-site</code></a> &mdash; website content and configuration</li>
+<li><a href="https://github.com/apache/sourcelume-spec"><code>sourcelume-spec</code></a> &mdash; Sourcelume specification work</li>
+<li><a href="https://github.com/apache/sourcelume-registry"><code>sourcelume-registry</code></a> &mdash; registry implementation work</li>
+</ul>
+<p>For website changes, use <a href="https://github.com/apache/sourcelume-site"><code>apache/sourcelume-site</code></a>. To make your pull request easier to review and apply, please follow these conventions:</p>
+<ul>
+<li>Create a branch for your change.</li>
+<li>Base pull requests on the <code>main</code> branch.</li>
+<li>Keep pull requests focused. Smaller pull requests are easier to review and merge.</li>
+<li>If your pull request has conflicts with <code>main</code>, please rebase your branch.</li>
+<li>If you have several commits for the same change, consider squashing them into one commit before the pull request is merged.</li>
+<li>Follow the scouts rule: leave the project a little cleaner than you found it.</li>
+<li>For substantive website changes, run the project checks before opening or updating your pull request:</li>
+</ul>
+<pre><code class="language-bash">make check
+</code></pre>
+<p>For example, to work on the website repository:</p>
+<pre><code class="language-bash"># after forking apache/sourcelume-site on GitHub
+git clone https://github.com/&lt;your-username&gt;/sourcelume-site.git
+cd sourcelume-site
+git checkout -b my-branch origin/main
+git remote add upstream https://github.com/apache/sourcelume-site.git
+</code></pre>
+<p>Keep your branch up to date with <code>main</code>:</p>
+<pre><code class="language-bash">git fetch upstream
+git pull --rebase upstream main
+</code></pre>
+<p>Then push your branch to your GitHub fork and open a pull request against <code>apache/sourcelume-site</code>:</p>
+<pre><code class="language-bash">git push origin my-branch
+</code></pre>
+<p>If your pull request does not seem to be moving forward, feel free to leave a brief comment on the pull request asking for an update.</p>
+<h2>Becoming a committer</h2>
+<p>If you're interested in becoming a committer, please refer to this Apache <a href="https://infra.apache.org/new-committers-guide.html">Contributor Guide</a> for more information.</p>
+<h2>Committers</h2>
 <table>
 <thead>
 <tr>
-<th>Page</th>
-<th>What you'll find</th>
+<th>Name</th>
+<th>Apache ID</th>
+<th>PMC Member</th>
+<th>Affiliation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><a href="about.html">About</a></td>
-<td>About Apache Sourcelume</td>
+<td>Jamie Goodyear</td>
+<td>jgoodyear</td>
+<td>&checkmark;</td>
+<td>Savoirtech</td>
 </tr>
 <tr>
-<td><a href="get-involved.html">Get involved</a></td>
-<td>Mailing list, chat, and how to contribute</td>
+<td>Andrew Musselman</td>
+<td>akm</td>
+<td>&checkmark;</td>
+<td>ASF Tooling</td>
 </tr>
 <tr>
-<td><a href="faq.html">FAQ</a></td>
-<td>Short answers to common questions</td>
+<td>Calvin Kirs</td>
+<td>kirs</td>
+<td>&checkmark;</td>
+<td></td>
+</tr>
+<tr>
+<td>Dave Fisher</td>
+<td>wave</td>
+<td>&checkmark;</td>
+<td>unaffiliated</td>
+</tr>
+<tr>
+<td>Jeff Genender</td>
+<td>jgenender</td>
+<td>&checkmark;</td>
+<td>Savoirtech</td>
+</tr>
+<tr>
+<td>Achim Nierbeck</td>
+<td>anierbeck</td>
+<td>&checkmark;</td>
+<td>codecentric</td>
+</tr>
+<tr>
+<td>JB Onofr&eacute;</td>
+<td>jbonofre</td>
+<td>&checkmark;</td>
+<td></td>
+</tr>
+<tr>
+<td>Ra&uacute;l Cumplido</td>
+<td>raulcd</td>
+<td>&checkmark;</td>
+<td>QuantStack</td>
 </tr></tbody></table>
 
     </div>
