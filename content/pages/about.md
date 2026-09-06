@@ -11,7 +11,6 @@ Sourcelume does not verify, adjudicate, or certify that stated terms are accurat
 legally sufficient. It is neutral plumbing — the tooling and registry that make
 consistent, verifiable documentation possible for those who choose to use it.
 
-
 ## Apache Sourcelume Workflow
 
 ```mermaid

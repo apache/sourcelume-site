@@ -8,11 +8,9 @@ modern AI and to help ASF communities adopt AI responsibly. It provides access t
 tooling, ecosystem support for AI-focused projects, and a place to share good practices. See
 [Responsible AI](https://apache.org/foundation/initiatives/responsibleai).
 
-
 ## How can I take part or ask a question about Apache Sourcelume?
 
 Through the mailing list or the ASF Slack channel — both are listed on
 [Get involved](get-involved.html).
-
 
 *This FAQ will grow as questions come up on the mailing list.*

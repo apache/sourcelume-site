@@ -15,24 +15,27 @@ Install the following tools:
 - Git
 
 On macOS, `uv` can be installed with:
+
 ```bash
 brew install uv
 ```
 
 Or with the official installer:
+
 ```bash
 curl -LsSf [https://astral.sh/uv/install.sh](https://astral.sh/uv/install.sh) | sh
 ```
 
 On Windows, `uv` can be installed with:
+
 ```bash
 winget install astral.sh.uv
 ```
 
-
 ## Create the local environment
 
 From the project root, run:
+
 ```bash
 uv sync
 ```
@@ -47,6 +50,7 @@ source .venv/bin/activate
 ```
 
 You can confirm the environment is active with:
+
 ```bash
 python --version
 ```
@@ -54,6 +58,7 @@ python --version
 ## Run local checks
 
 Before committing substantive changes, run:
+
 ```bash
 make check
 ```
@@ -64,10 +69,13 @@ builds.
 ## Preview the site locally
 
 If the project provides a local build target, run:
+
 ```bash
 make build
 ```
+
 or:
+
 ```bash
 make serve
 ```
@@ -79,6 +87,7 @@ Check the `Makefile` for the exact available targets.
 The authoritative website build runs on ASF infrastructure.
 
 Some Pelican behavior may rely on ASF-specific Pelican plugins from:
+
 ```text
 https://github.com/apache/infrastructure-pelican
 ```
@@ -89,9 +98,11 @@ setup instructions.
 ## Updating dependencies
 
 Do not run:
+
 ```bash
 pip freeze > requirements.txt
 ```
+
 for normal development.
 
 Dependencies should be managed through the project’s Python dependency configuration.

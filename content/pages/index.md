@@ -34,8 +34,6 @@ independently.
 A versioned, JSON-LD metadata schema for dataset origin, custody chain, and licensing —
 built to align with OTDI, the DPI annotation taxonomy, Croissant, and the SPDX AI Profile rather
 than compete with them.
-
-
 </div>
 
 <div class="sourcelume-card">
@@ -61,8 +59,8 @@ provenance.
 
 ## Where to go next
 
-| Page | What you'll find                          |
-| --- |-------------------------------------------|
-| [About](about.html) | About Apache Sourcelume                   |
+| Page | What you'll find |
+| --- | --- |
+| [About](about.html) | About Apache Sourcelume |
 | [Get involved](get-involved.html) | Mailing list, chat, and how to contribute |
-| [FAQ](faq.html) | Short answers to common questions         |
+| [FAQ](faq.html) | Short answers to common questions |

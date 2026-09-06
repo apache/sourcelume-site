@@ -17,3 +17,4 @@ pelican.auto.py
 .venv
 .claude/
 .idea/
+.junie
