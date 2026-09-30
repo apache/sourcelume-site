@@ -9,6 +9,33 @@ publish verifiable claims about a dataset's origin, custody, and licensing.
 
 The Sourcelume Specification is designed for interoperability, verifiability, and long-term stability. Its architecture is built on several key pillars:
 
+```mermaid
+graph TD
+    A[Dataset Provenance Record] -->|expressed as| B[JSON-LD]
+    B -->|structural validation| C[JSON Schema]
+    B -->|semantic validation| D[SHACL]
+    B -->|interoperability| E[Crosswalk Mappings]
+    E -->|translate to/from| F[MLCommons Croissant]
+    E -->|translate to/from| G[SPDX AI Profile]
+    E -->|translate to/from| H[OTDI]
+    C -->|versioned| I[Immutable Schema Files]
+    D -->|versioned| J[Immutable Context Files]
+    I -->|semantic versioning| K[Spec Version v0.0.1]
+    J -->|semantic versioning| K
+```
+
+**Architecture Flow:**
+
+1. **Dataset Provenance Record** → expressed as → **JSON-LD**
+2. **JSON-LD** → structural validation → **JSON Schema**
+3. **JSON-LD** → semantic validation → **SHACL**
+4. **JSON-LD** → interoperability → **Crosswalk Mappings**
+5. **Crosswalk Mappings** → translate to/from → **MLCommons Croissant**, **SPDX AI Profile**, **OTDI**
+6. **JSON Schema** & **SHACL** → versioned → **Immutable Schema/Context Files**
+7. **Immutable Files** → semantic versioning → **Spec Version**
+
+**Key Components:**
+
 - **JSON-LD Foundation**: Sourcelume records are expressed as [JSON-LD](https://json-ld.org/), providing a bridge between standard JSON and the rich semantics of the Linked Data ecosystem.
 - **Structural and Semantic Validation**:
   - **JSON Schema**: Used for structural validation of records, ensuring that required fields and data formats are consistently applied.
