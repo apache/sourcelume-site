@@ -102,18 +102,222 @@
       <p>The Apache Sourcelume Registry is the central repository for signed provenance records.
 It provides a stable, queryable endpoint for dataset consumers and auditors to
 verify provenance claims.</p>
-<h2>Registry Architecture</h2>
-<p>The registry is built on <strong>Apache Atlas</strong> to provide robust metadata management and
-lineage tracking. It supports ingestion of signed records via the Sourcelume
-Attestation pipeline and exposes them through REST and GraphQL interfaces for the
-Sourcelume Explorer and other machine consumers.</p>
+<h2>High-Level Architecture</h2>
+<p>The Registry serves as the authoritative store for AI training data provenance records. It receives signed attestations from data producers, stores them with full lineage tracking, and exposes them through modern APIs for verification and audit.</p>
+<pre><code class="language-mermaid">graph LR
+    A[Data Producers] --&gt;|Signed Attestations| B[Attestation Pipeline]
+    B --&gt;|Ingest| C[Registry Core]
+    C --&gt;|Store| D[Apache Atlas]
+    D --&gt;|Lineage &amp; Metadata| C
+    C --&gt;|REST API| E[Explorer UI]
+    C --&gt;|GraphQL API| F[Machine Consumers]
+    C --&gt;|REST API| G[Auditors]
+</code></pre>
+<p><strong>Architecture Flow:</strong></p>
+<ol>
+<li><strong>Data Producers</strong> &rarr; Signed Attestations &rarr; <strong>Attestation Pipeline</strong></li>
+<li><strong>Attestation Pipeline</strong> &rarr; Ingest &rarr; <strong>Registry Core</strong></li>
+<li><strong>Registry Core</strong> &harr; Store/Retrieve &harr; <strong>Apache Atlas</strong></li>
+<li><strong>Registry Core</strong> &rarr; REST API &rarr; <strong>Explorer UI</strong></li>
+<li><strong>Registry Core</strong> &rarr; GraphQL API &rarr; <strong>Machine Consumers</strong></li>
+<li><strong>Registry Core</strong> &rarr; REST API &rarr; <strong>Auditors</strong></li>
+</ol>
+<p><strong>Key Components:</strong></p>
+<ul>
+<li><strong>Apache Atlas Backend</strong> &mdash; Provides robust metadata management, lineage tracking, and graph-based querying</li>
+<li><strong>Attestation Ingestion</strong> &mdash; Validates and processes signed provenance records</li>
+<li><strong>REST &amp; GraphQL APIs</strong> &mdash; Dual interface for human-readable exploration and programmatic access</li>
+<li><strong>Verification Engine</strong> &mdash; Cryptographic signature validation and chain-of-custody verification</li>
+</ul>
+<h2>Detailed Architecture</h2>
+<h3>Technology Stack</h3>
+<p>The Registry is built with:</p>
+<ul>
+<li><strong>Java 21</strong> &mdash; Modern Java with performance improvements and language features</li>
+<li><strong>CDI (Contexts and Dependency Injection)</strong> &mdash; Enterprise dependency injection and lifecycle management</li>
+<li><strong>Apache Atlas</strong> &mdash; Metadata repository with built-in lineage and governance capabilities</li>
+<li><strong>REST &amp; GraphQL</strong> &mdash; Dual API layer for flexible access patterns</li>
+</ul>
+<h3>Core Modules</h3>
+<pre><code class="language-mermaid">graph TD
+    A[API Layer] --&gt; B[Service Layer]
+    B --&gt; C[Attestation Validator]
+    B --&gt; D[Lineage Tracker]
+    B --&gt; E[Query Engine]
+    C --&gt; F[Atlas Client]
+    D --&gt; F
+    E --&gt; F
+    F --&gt; G[Apache Atlas]
+</code></pre>
+<p>The Registry architecture consists of several layered modules:</p>
+<ul>
+<li><strong>API Layer</strong> &mdash; REST and GraphQL endpoints with authentication and rate limiting</li>
+<li><strong>Service Layer</strong> &mdash; Business logic that coordinates attestation processing, verification, and querying</li>
+<li><strong>Attestation Validator</strong> &mdash; Cryptographic signature verification and schema validation</li>
+<li><strong>Lineage Tracker</strong> &mdash; Manages provenance chains and dataset relationships in Atlas</li>
+<li><strong>Query Engine</strong> &mdash; Optimized queries against Atlas for common access patterns</li>
+<li><strong>Atlas Client</strong> &mdash; Integration layer with Apache Atlas metadata store</li>
+<li><strong>Apache Atlas</strong> &mdash; Underlying metadata repository and lineage store</li>
+</ul>
+<h3>Data Flow</h3>
+<ol>
+<li>
+<p><strong>Ingestion Workflow</strong></p>
+<ul>
+<li>Attestation arrives via REST endpoint with signature</li>
+<li>Signature validated against known public keys</li>
+<li>Schema validated against Sourcelume specification</li>
+<li>Metadata extracted and normalized</li>
+<li>Record stored in Atlas with lineage relationships</li>
+<li>Confirmation returned to producer</li>
+</ul>
+</li>
+<li>
+<p><strong>Query Workflow</strong></p>
+<ul>
+<li>Consumer requests provenance for dataset identifier</li>
+<li>Query engine translates to Atlas lineage query</li>
+<li>Results filtered and formatted</li>
+<li>Signature proofs included in response</li>
+<li>Response returned via REST or GraphQL</li>
+</ul>
+</li>
+<li>
+<p><strong>Verification Workflow</strong></p>
+<ul>
+<li>Auditor submits attestation for verification</li>
+<li>Registry checks signature validity</li>
+<li>Lineage chain reconstructed from Atlas</li>
+<li>Chain-of-custody validated</li>
+<li>Verification report generated</li>
+</ul>
+</li>
+</ol>
+<h3>API Design</h3>
+<p><strong>REST Endpoints:</strong></p>
+<ul>
+<li><code>POST /api/v1/attestations</code> &mdash; Submit new attestation</li>
+<li><code>GET /api/v1/attestations/{id}</code> &mdash; Retrieve attestation by ID</li>
+<li><code>GET /api/v1/datasets/{id}/provenance</code> &mdash; Get full provenance chain</li>
+<li><code>POST /api/v1/verify</code> &mdash; Verify attestation signature and chain</li>
+</ul>
+<p><strong>GraphQL Schema:</strong></p>
+<pre><code class="language-graphql">type Attestation {
+  id: ID!
+  datasetId: String!
+  producer: Producer!
+  signature: Signature!
+  metadata: JSON!
+  lineage: [Attestation!]!
+}
+
+type Query {
+  attestation(id: ID!): Attestation
+  datasetProvenance(datasetId: String!): [Attestation!]!
+  verifyAttestation(attestationId: ID!): VerificationResult!
+}
+</code></pre>
+<h2>Developer Setup</h2>
+<p>To contribute to the Registry or run it locally for testing, follow these steps.</p>
+<h3>Prerequisites</h3>
+<ul>
+<li><strong>Java 21</strong> &mdash; Install via <a href="https://sdkman.io/">SDKMAN!</a> or your package manager</li>
+</ul>
+<pre><code class="language-bash">  sdk install java 21.0.1-tem
+</code></pre>
+<ul>
+<li><strong>Maven</strong> &mdash; Build tool</li>
+<li><strong>Docker</strong> &mdash; For running Apache Atlas locally</li>
+<li><strong>Git</strong> &mdash; Version control</li>
+</ul>
+<h3>Local Development Environment</h3>
+<ol>
+<li><strong>Clone the repository</strong></li>
+</ol>
+<pre><code class="language-bash">   git clone https://github.com/apache/sourcelume-registry.git
+   cd sourcelume-registry
+</code></pre>
+<ol start="2">
+<li>
+<p><strong>Start development dependencies</strong></p>
+<p>The <code>dev-support</code> directory contains Docker Compose configurations for local testing:</p>
+</li>
+</ol>
+<pre><code class="language-bash">   cd dev-support
+   docker-compose up -d
+</code></pre>
+<p>This starts:</p>
+<ul>
+<li>Apache Atlas on <code>localhost:21000</code></li>
+<li>Kafka (Atlas dependency) on <code>localhost:9092</code></li>
+<li>Any other required services</li>
+</ul>
+<ol start="3">
+<li>
+<p><strong>Configure CDI</strong></p>
+<p>The project uses CDI for dependency injection. Configuration files are typically in:</p>
+<ul>
+<li><code>src/main/resources/META-INF/beans.xml</code> &mdash; CDI bean discovery</li>
+<li><code>src/main/resources/application.properties</code> &mdash; Application configuration</li>
+</ul>
+<p>For local development, override settings:</p>
+</li>
+</ol>
+<pre><code class="language-properties">   atlas.rest.address=http://localhost:21000
+   registry.signing.verify=false  # For local testing only
+</code></pre>
+<ol start="4">
+<li><strong>Build the project</strong></li>
+</ol>
+<pre><code class="language-bash">   mvn clean install
+</code></pre>
+<ol start="5">
+<li><strong>Run the Registry</strong></li>
+</ol>
+<pre><code class="language-bash">   mvn quarkus:dev  # If using Quarkus
+   # or
+   java -jar target/sourcelume-registry-{version}.jar
+</code></pre>
+<p>The Registry API will be available at <code>http://localhost:8080</code></p>
+<h3>Testing Against Local Registry</h3>
+<p>The <code>dev-support</code> directory includes:</p>
+<ul>
+<li><strong>Sample attestations</strong> &mdash; Test data for development</li>
+<li><strong>Test scripts</strong> &mdash; Shell scripts to submit and query test data</li>
+<li><strong>Docker profiles</strong> &mdash; Different configurations for various scenarios</li>
+</ul>
+<p><strong>Run integration tests:</strong></p>
+<pre><code class="language-text">mvn verify -Pintegration-tests
+</code></pre>
+<p><strong>Submit a test attestation:</strong></p>
+<pre><code class="language-text">bash curl -X POST [http://localhost:8080/api/v1/attestations](http://localhost:8080/api/v1/attestations)
+-H "Content-Type: application/json"
+-d @dev-support/samples/sample-attestation.json
+</code></pre>
+<p><strong>Query via GraphQL:</strong></p>
+<pre><code class="language-text">bash curl -X POST [http://localhost:8080/graphql](http://localhost:8080/graphql)
+-H "Content-Type: application/json"
+-d '{"query": "{ attestation(id: "test-123") { datasetId producer { name } } }"}'
+</code></pre>
+<h3>Development Tips</h3>
+<ul>
+<li><strong>Hot Reload</strong> &mdash; If using Quarkus, changes to Java classes are reloaded automatically in dev mode</li>
+<li><strong>Atlas UI</strong> &mdash; Access Atlas UI at <code>http://localhost:21000</code> to browse metadata and lineage</li>
+<li><strong>Logging</strong> &mdash; Set <code>quarkus.log.level=DEBUG</code> for verbose output during development</li>
+<li><strong>Mock Mode</strong> &mdash; Set <code>registry.mock=true</code> to run without Atlas for rapid API testing</li>
+</ul>
 <h2>Registry Repository</h2>
-<p>The Sourcelume Registry is currently being developed in its own repository:</p>
+<p>The Sourcelume Registry is actively developed in its own repository:</p>
 <ul>
 <li><strong><a href="https://github.com/apache/sourcelume-registry">apache/sourcelume-registry</a></strong></li>
 </ul>
-<p>Please visit the repository to view the current drafts, open issues, and join the
-discussion.</p>
+<p>Visit the repository to:</p>
+<ul>
+<li>View current implementation status</li>
+<li>Report issues or propose features</li>
+<li>Contribute code or documentation</li>
+<li>Join technical discussions</li>
+</ul>
 
     </div>
   </div>

@@ -104,6 +104,30 @@ representing AI training-data provenance. It allows producers and curators to
 publish verifiable claims about a dataset's origin, custody, and licensing.</p>
 <h2>Architecture</h2>
 <p>The Sourcelume Specification is designed for interoperability, verifiability, and long-term stability. Its architecture is built on several key pillars:</p>
+<pre><code class="language-mermaid">graph TD
+    A[Dataset Provenance Record] --&gt;|expressed as| B[JSON-LD]
+    B --&gt;|structural validation| C[JSON Schema]
+    B --&gt;|semantic validation| D[SHACL]
+    B --&gt;|interoperability| E[Crosswalk Mappings]
+    E --&gt;|translate to/from| F[MLCommons Croissant]
+    E --&gt;|translate to/from| G[SPDX AI Profile]
+    E --&gt;|translate to/from| H[OTDI]
+    C --&gt;|versioned| I[Immutable Schema Files]
+    D --&gt;|versioned| J[Immutable Context Files]
+    I --&gt;|semantic versioning| K[Spec Version v0.0.1]
+    J --&gt;|semantic versioning| K
+</code></pre>
+<p><strong>Architecture Flow:</strong></p>
+<ol>
+<li><strong>Dataset Provenance Record</strong> &rarr; expressed as &rarr; <strong>JSON-LD</strong></li>
+<li><strong>JSON-LD</strong> &rarr; structural validation &rarr; <strong>JSON Schema</strong></li>
+<li><strong>JSON-LD</strong> &rarr; semantic validation &rarr; <strong>SHACL</strong></li>
+<li><strong>JSON-LD</strong> &rarr; interoperability &rarr; <strong>Crosswalk Mappings</strong></li>
+<li><strong>Crosswalk Mappings</strong> &rarr; translate to/from &rarr; <strong>MLCommons Croissant</strong>, <strong>SPDX AI Profile</strong>, <strong>OTDI</strong></li>
+<li><strong>JSON Schema</strong> &amp; <strong>SHACL</strong> &rarr; versioned &rarr; <strong>Immutable Schema/Context Files</strong></li>
+<li><strong>Immutable Files</strong> &rarr; semantic versioning &rarr; <strong>Spec Version</strong></li>
+</ol>
+<p><strong>Key Components:</strong></p>
 <ul>
 <li><strong>JSON-LD Foundation</strong>: Sourcelume records are expressed as <a href="https://json-ld.org/">JSON-LD</a>, providing a bridge between standard JSON and the rich semantics of the Linked Data ecosystem.</li>
 <li><strong>Structural and Semantic Validation</strong>:
