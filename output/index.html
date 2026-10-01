@@ -114,6 +114,14 @@ unverifiable &mdash; a 2024 audit found license-omission rates above 70% across 
 sites. Sourcelume doesn't adjudicate whether a dataset's stated terms are accurate; it gives
 producers a shared, neutral way to document custody and licensing so that claims can be checked
 independently.</p>
+<h2>High-level Apache Sourcelume architecture</h2>
+<pre><code class="language-mermaid">graph LR
+    SPEC[Specification] --&gt;|shapes| ATTEST[Attestation]
+    SPEC --&gt;|shapes| REG[Registry]
+    PROD[Dataset producers&lt;br/&gt;&amp; curators] --&gt;|sign with| ATTEST
+    ATTEST --&gt;|signed records| REG[Registry&lt;br/&gt;Apache Atlas]
+    REG --&gt;|REST / GraphQL| USERS[Trainers &amp; auditors]
+</code></pre>
 <div class="sourcelume-cards">
 <div class="sourcelume-card">
 <h2>Specification</h2>
@@ -133,6 +141,21 @@ cryptographically sign what they assert, and lets anyone independently check the
 provenance.</p>
 </div>
 </div>
+<h3>Our North Star</h3>
+<pre><code class="language-mermaid">graph TD
+    SPEC[Specification&lt;br/&gt;JSON-LD, JSON Schema, SHACL] --&gt;|crosswalks to| CROISSANT[MLCommons Croissant]
+    SPEC --&gt;|crosswalks to| SPDX[SPDX AI Profile]
+    SPEC --&gt;|crosswalks to| OTDI[OTDI]
+
+    PROD[Dataset producers&lt;br/&gt;&amp; curators] --&gt;|cli ingest| ATTEST[Attestation&lt;br/&gt;sign &amp; verify]
+    SPEC --&gt;|defines shape of| ATTEST
+
+    ATTEST --&gt;|signed ProvenanceRecord&lt;br/&gt;JSON-LD| REG[Registry&lt;br/&gt;Apache Atlas]
+    SPEC --&gt;|defines shape of| REG
+
+    REG --&gt;|REST / GraphQL| EXPLORER[Explorer&lt;br/&gt;search &amp; provenance cards]
+    REG --&gt;|REST / GraphQL| MACHINE[Machine consumers&lt;br/&gt;trainers, auditors]
+</code></pre>
 <h2>Where to go next</h2>
 <table>
 <thead>
