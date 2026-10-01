@@ -25,6 +25,17 @@ sites. Sourcelume doesn't adjudicate whether a dataset's stated terms are accura
 producers a shared, neutral way to document custody and licensing so that claims can be checked
 independently.
 
+## High-level Apache Sourcelume architecture
+
+```mermaid
+graph LR
+    SPEC[Specification] -->|shapes| ATTEST[Attestation]
+    SPEC -->|shapes| REG[Registry]
+    PROD[Dataset producers<br/>& curators] -->|sign with| ATTEST
+    ATTEST -->|signed records| REG[Registry<br/>Apache Atlas]
+    REG -->|REST / GraphQL| USERS[Trainers & auditors]
+```
+
 <div class="sourcelume-cards">
 
 <div class="sourcelume-card">
@@ -56,6 +67,24 @@ provenance.
 </div>
 
 </div>
+
+### Our North Star
+
+```mermaid
+graph TD
+    SPEC[Specification<br/>JSON-LD, JSON Schema, SHACL] -->|crosswalks to| CROISSANT[MLCommons Croissant]
+    SPEC -->|crosswalks to| SPDX[SPDX AI Profile]
+    SPEC -->|crosswalks to| OTDI[OTDI]
+
+    PROD[Dataset producers<br/>& curators] -->|cli ingest| ATTEST[Attestation<br/>sign & verify]
+    SPEC -->|defines shape of| ATTEST
+
+    ATTEST -->|signed ProvenanceRecord<br/>JSON-LD| REG[Registry<br/>Apache Atlas]
+    SPEC -->|defines shape of| REG
+
+    REG -->|REST / GraphQL| EXPLORER[Explorer<br/>search & provenance cards]
+    REG -->|REST / GraphQL| MACHINE[Machine consumers<br/>trainers, auditors]
+```
 
 ## Where to go next
 
