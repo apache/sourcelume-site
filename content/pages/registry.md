@@ -5,7 +5,23 @@ The Apache Sourcelume Registry is the central repository for signed provenance r
 It provides a stable, queryable endpoint for dataset consumers and auditors to
 verify provenance claims.
 
-## High-Level Architecture
+## Current Implementation vs. Target Architecture
+
+The Registry is evolving. While the high-level architecture describes the target enterprise-grade system, we currently provide a lightweight implementation via our **[Simple Demo](https://github.com/apache/sourcelume-registry/tree/main/examples/simple-demo)**. This demo allows you to experience the core registry workflows—ingestion and querying—without the complexity of the full Apache Atlas backend.
+
+## Quick Start: Simple Demo
+
+Want to see the registry in action right now? The `simple-demo` provides a lightweight, standalone implementation of the core registry concepts.
+
+- **Purpose**: Demonstrates the fundamental REST API workflows for provenance.
+- **Ideal for**: Rapid prototyping, understanding basic data flow, and local testing.
+- **Key Difference**: Uses an in-memory store instead of Apache Atlas.
+
+**[View the Simple Demo on GitHub →](https://github.com/apache/sourcelume-registry/tree/main/examples/simple-demo)**
+
+---
+
+## High-Level Architecture (Target State)
 
 The Registry serves as the authoritative store for AI training data provenance records. It receives signed attestations from data producers, stores them with full lineage tracking, and exposes them through modern APIs for verification and audit.
 

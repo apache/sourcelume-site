@@ -1,12 +1,15 @@
 Title: Specification
 license: https://www.apache.org/licenses/LICENSE-2.0
 
+### Current Version: v0.0.1
+
 The Apache Sourcelume Specification defines a structured, machine-readable format for
 representing AI training-data provenance. It allows producers and curators to
 publish verifiable claims about a dataset's origin, custody, and licensing.
 
 ## Architecture
 
+...
 The Sourcelume Specification is designed for interoperability, verifiability, and long-term stability. Its architecture is built on several key pillars:
 
 ```mermaid
