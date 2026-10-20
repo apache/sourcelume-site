@@ -21,6 +21,22 @@ Want to see the registry in action right now? The `simple-demo` provides a light
 
 ---
 
+## API Reference
+
+The REST API of the current registry implementation is described by an OpenAPI document that
+is kept in sync with the code:
+
+- **[OpenAPI document (`docs/openapi.yaml`)](https://github.com/apache/sourcelume-registry/blob/main/docs/openapi.yaml)**
+  — the endpoints, request and response schemas, and status codes of the `main` branch.
+- **Interactive documentation** — a locally running registry serves the same document at
+  `/q/openapi` and an interactive Swagger UI at `/q/swagger-ui`
+  (for example `http://localhost:8082/q/swagger-ui`).
+
+The API is still evolving. The *API Design* section below sketches the intended design of
+the registry; the OpenAPI document describes what the registry implements today.
+
+---
+
 ## High-Level Architecture (Target State)
 
 The Registry serves as the authoritative store for AI training data provenance records. It receives signed attestations from data producers, stores them with full lineage tracking, and exposes them through modern APIs for verification and audit.
