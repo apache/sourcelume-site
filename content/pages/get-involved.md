@@ -35,5 +35,9 @@ ecosystem — dataset curators, model producers, and communities working on adja
 standards. If you would like to help with a specific area, say hello on the mailing list
 and we will point you to where the work is happening.
 
+New to the project? The [end-to-end sample](sample.html) walks the whole stack — training,
+records, validation, and the registry — on a small public-domain corpus, and is a good
+place to see all the pieces working together.
+
 _More detailed contribution guidance will be added here as the project's processes take
 shape._

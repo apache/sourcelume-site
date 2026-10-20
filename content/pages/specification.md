@@ -7,6 +7,18 @@ The Apache Sourcelume Specification defines a structured, machine-readable forma
 representing AI training-data provenance. It allows producers and curators to
 publish verifiable claims about a dataset's origin, custody, and licensing.
 
+## Record Types
+
+The specification defines two record types:
+
+- **`ProvenanceRecord`** — dataset provenance: where a dataset came from, its custody
+  chain, and the licensing terms it carries.
+- **`TrainingProvenanceRecord`** — model provenance: which datasets a model was trained
+  on, in which training phase, and how completely the training data is disclosed.
+
+A canonical record IRI identifies a record; the join between the two record types is that
+IRI, not an approval state.
+
 ## Architecture
 
 ...
@@ -14,7 +26,9 @@ The Sourcelume Specification is designed for interoperability, verifiability, an
 
 ```mermaid
 graph TD
-    A[Dataset Provenance Record] -->|expressed as| B[JSON-LD]
+    A["ProvenanceRecord (dataset)" ] -->|expressed as| B[JSON-LD]
+    T["TrainingProvenanceRecord (model)"] -->|expressed as| B
+    T -->|joins by canonical IRI| A
     B -->|structural validation| C[JSON Schema]
     B -->|semantic validation| D[SHACL]
     B -->|interoperability| E[Crosswalk Mappings]
@@ -29,7 +43,7 @@ graph TD
 
 **Architecture Flow:**
 
-1. **Dataset Provenance Record** → expressed as → **JSON-LD**
+1. **ProvenanceRecord / TrainingProvenanceRecord** → expressed as → **JSON-LD**
 2. **JSON-LD** → structural validation → **JSON Schema**
 3. **JSON-LD** → semantic validation → **SHACL**
 4. **JSON-LD** → interoperability → **Crosswalk Mappings**

@@ -10,6 +10,8 @@ Current Apache Sourcelume repositories include:
 - [`sourcelume-site`](https://github.com/apache/sourcelume-site) — website content and configuration
 - [`sourcelume-spec`](https://github.com/apache/sourcelume-spec) — Sourcelume specification work
 - [`sourcelume-registry`](https://github.com/apache/sourcelume-registry) — registry implementation work
+- [`sourcelume-tooling`](https://github.com/apache/sourcelume-tooling) — build-system plugins for generating, validating, and submitting records
+- [`sourcelume-sample`](https://github.com/apache/sourcelume-sample) — the end-to-end training sample
 
 For website changes, use [`apache/sourcelume-site`](https://github.com/apache/sourcelume-site). To make your pull request easier to review and apply, please follow these conventions:
 
