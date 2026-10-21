@@ -103,11 +103,23 @@
 <p>The Apache Sourcelume Specification defines a structured, machine-readable format for
 representing AI training-data provenance. It allows producers and curators to
 publish verifiable claims about a dataset's origin, custody, and licensing.</p>
+<h2>Record Types</h2>
+<p>The specification defines two record types:</p>
+<ul>
+<li><strong><code>ProvenanceRecord</code></strong> &mdash; dataset provenance: where a dataset came from, its custody
+chain, and the licensing terms it carries.</li>
+<li><strong><code>TrainingProvenanceRecord</code></strong> &mdash; model provenance: which datasets a model was trained
+on, in which training phase, and how completely the training data is disclosed.</li>
+</ul>
+<p>A canonical record IRI identifies a record; the join between the two record types is that
+IRI, not an approval state.</p>
 <h2>Architecture</h2>
 <p>...
 The Sourcelume Specification is designed for interoperability, verifiability, and long-term stability. Its architecture is built on several key pillars:</p>
 <pre><code class="language-mermaid">graph TD
-    A[Dataset Provenance Record] --&gt;|expressed as| B[JSON-LD]
+    A["ProvenanceRecord (dataset)" ] --&gt;|expressed as| B[JSON-LD]
+    T["TrainingProvenanceRecord (model)"] --&gt;|expressed as| B
+    T --&gt;|joins by canonical IRI| A
     B --&gt;|structural validation| C[JSON Schema]
     B --&gt;|semantic validation| D[SHACL]
     B --&gt;|interoperability| E[Crosswalk Mappings]
@@ -121,7 +133,7 @@ The Sourcelume Specification is designed for interoperability, verifiability, an
 </code></pre>
 <p><strong>Architecture Flow:</strong></p>
 <ol>
-<li><strong>Dataset Provenance Record</strong> &rarr; expressed as &rarr; <strong>JSON-LD</strong></li>
+<li><strong>ProvenanceRecord / TrainingProvenanceRecord</strong> &rarr; expressed as &rarr; <strong>JSON-LD</strong></li>
 <li><strong>JSON-LD</strong> &rarr; structural validation &rarr; <strong>JSON Schema</strong></li>
 <li><strong>JSON-LD</strong> &rarr; semantic validation &rarr; <strong>SHACL</strong></li>
 <li><strong>JSON-LD</strong> &rarr; interoperability &rarr; <strong>Crosswalk Mappings</strong></li>
