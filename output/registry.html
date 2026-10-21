@@ -115,6 +115,19 @@ verify provenance claims.</p>
 <p>To see the whole stack &mdash; training a small model and publishing its provenance records &mdash;
 visit the <a href="sample.html">Sample</a>.</p>
 <hr/>
+<h2>API Reference</h2>
+<p>The REST API of the current registry implementation is described by an OpenAPI document that
+is kept in sync with the code:</p>
+<ul>
+<li><strong><a href="https://github.com/apache/sourcelume-registry/blob/main/docs/openapi.yaml">OpenAPI document (<code>docs/openapi.yaml</code>)</a></strong>
+&mdash; the endpoints, request and response schemas, and status codes of the <code>main</code> branch.</li>
+<li><strong>Interactive documentation</strong> &mdash; a locally running registry serves the same document at
+<code>/q/openapi</code> and an interactive Swagger UI at <code>/q/swagger-ui</code>
+(for example <code>http://localhost:8082/q/swagger-ui</code>).</li>
+</ul>
+<p>The API is still evolving. The <em>API Design</em> section below sketches the intended design of
+the registry; the OpenAPI document describes what the registry implements today.</p>
+<hr/>
 <h2>High-Level Architecture (Target State)</h2>
 <p>The Registry serves as the authoritative store for AI training data provenance records. It receives signed attestations from data producers, stores them with full lineage tracking, and exposes them through modern APIs for verification and audit.</p>
 <pre><code class="language-mermaid">graph LR
