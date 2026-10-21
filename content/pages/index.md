@@ -79,7 +79,7 @@ graph TD
     PROD[Dataset producers<br/>& curators] -->|cli ingest| ATTEST[Attestation<br/>sign & verify]
     SPEC -->|defines shape of| ATTEST
 
-    ATTEST -->|signed ProvenanceRecord<br/>JSON-LD| REG[Registry<br/>Apache Atlas]
+    ATTEST -->|signed records:<br/>ProvenanceRecord,<br/>TrainingProvenanceRecord| REG[Registry<br/>Apache Atlas]
     SPEC -->|defines shape of| REG
 
     REG -->|REST / GraphQL| EXPLORER[Explorer<br/>search & provenance cards]
@@ -91,5 +91,8 @@ graph TD
 | Page | What you'll find |
 | --- | --- |
 | [About](about.html) | About Apache Sourcelume |
+| [Specification](specification.html) | The metadata specification for provenance records |
+| [Registry](registry.html) | The reference registry built on Apache Atlas |
+| [Sample](sample.html) | An end-to-end training sample with full provenance |
 | [Get involved](get-involved.html) | Mailing list, chat, and how to contribute |
 | [FAQ](faq.html) | Short answers to common questions |

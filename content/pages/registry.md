@@ -19,6 +19,9 @@ Want to see the registry in action right now? The `simple-demo` provides a light
 
 **[View the Simple Demo on GitHub →](https://github.com/apache/sourcelume-registry/tree/main/examples/simple-demo)**
 
+To see the whole stack — training a small model and publishing its provenance records —
+visit the [Sample](sample.html).
+
 ---
 
 ## High-Level Architecture (Target State)
