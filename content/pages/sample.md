@@ -27,5 +27,5 @@ The sample lives in its own repository:
 The [README](https://github.com/apache/sourcelume-sample/blob/main/README.md) contains the
 quick start: train the model, validate both records against the current schemas, and publish
 them to a Sourcelume Registry instance. Everything runs locally on a small corpus, and the
-repository README describes the current state of each step — registry support for training
-provenance records is still landing.
+repository README describes the current state of each step, including the steps that
+deliberately do not work yet.
