@@ -19,7 +19,7 @@ github:
   description: "Apache Sourcelume"
   homepage: https://sourcelume.apache.org/
   features:
-    issues: false
+    issues: true
     projects: false
     wiki: false
   labels:
@@ -34,6 +34,7 @@ github:
 
 notifications:
   commits:      commits@sourcelume.apache.org
+  issues: issues@sourcelume.apache.org
   pullrequests: dev@sourcelume.apache.org
   jobs:         commits@sourcelume.apache.org
 
