@@ -32,7 +32,7 @@ graph LR
     SPEC[Specification] -->|shapes| ATTEST[Attestation]
     SPEC -->|shapes| REG[Registry]
     PROD[Dataset producers<br/>& curators] -->|sign with| ATTEST
-    ATTEST -->|signed records| REG[Registry<br/>Apache Atlas]
+    ATTEST -->|signed records| REG[Registry]
     REG -->|REST / GraphQL| USERS[Trainers & auditors]
 ```
 
@@ -51,8 +51,9 @@ than compete with them.
 
 ## Registry
 
-A reference implementation built on Apache Atlas, exposing REST and GraphQL APIs so trainers and
-auditors can search, filter, and query provenance records at scale.
+A reference implementation of the specification, exposing a REST API for publishing and
+resolving provenance records, with pluggable storage — PostgreSQL by default and an
+Apache Atlas distribution also available.
 
 </div>
 
@@ -79,7 +80,7 @@ graph TD
     PROD[Dataset producers<br/>& curators] -->|cli ingest| ATTEST[Attestation<br/>sign & verify]
     SPEC -->|defines shape of| ATTEST
 
-    ATTEST -->|signed records:<br/>ProvenanceRecord,<br/>TrainingProvenanceRecord| REG[Registry<br/>Apache Atlas]
+    ATTEST -->|signed records:<br/>ProvenanceRecord,<br/>TrainingProvenanceRecord| REG[Registry]
     SPEC -->|defines shape of| REG
 
     REG -->|REST / GraphQL| EXPLORER[Explorer<br/>search & provenance cards]
@@ -92,7 +93,7 @@ graph TD
 | --- | --- |
 | [About](about.html) | About Apache Sourcelume |
 | [Specification](specification.html) | The metadata specification for provenance records |
-| [Registry](registry.html) | The reference registry built on Apache Atlas |
+| [Registry](registry.html) | The reference registry for provenance records |
 | [Sample](sample.html) | An end-to-end training sample with full provenance |
 | [Get involved](get-involved.html) | Mailing list, chat, and how to contribute |
 | [FAQ](faq.html) | Short answers to common questions |

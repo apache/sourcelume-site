@@ -16,7 +16,7 @@ consistent, verifiable documentation possible for those who choose to use it.
 ```mermaid
 graph TD
     A[Dataset producers & curators] -->|cli ingest / attest| B[Sourcelume Attest]
-    B -->|signed records JSON-LD| C[Sourcelume Registry<br/>Apache Atlas]
+    B -->|signed records JSON-LD| C[Sourcelume Registry]
     C -->|REST / GraphQL| D[Sourcelume Explorer]
     C -->|REST / GraphQL| E[Machine consumers<br/>trainers, auditors]
 ```
