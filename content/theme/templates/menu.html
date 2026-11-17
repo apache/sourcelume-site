@@ -21,14 +21,6 @@
           </ul>
         </li>
         <li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li>
-        <li class="nav-item dropdown">
-          <a href="javascript:void(0)" class="nav-link dropdown-toggle hidden-xs" role="button" data-bs-toggle="dropdown"><span class="fa-solid fa-magnifying-glass" aria-hidden="true"></span> Search</a>
-          <ul class="search-form dropdown-menu">
-            <li>
-              <div id="pagefind-search" class="input-group" style="width: 100%; padding: 0 5px;"></div>
-            </li>
-          </ul>
-        </li>
         <li class="nav-item"><a class="nav-link" href="community.html">Community</a></li>
       </ul>
       <ul class="navbar-nav align-items-lg-center">
@@ -52,7 +44,38 @@
             <li><a class="dropdown-item" href="https://privacy.apache.org/policies/privacy-policy-public.html">Privacy policy</a></li>
           </ul>
         </li>
+        <li class="nav-item dropdown">
+          <a href="javascript:void(0)" class="nav-link nav-search-toggle" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-label="Search" title="Search (Ctrl+K or /)"><span class="fa-solid fa-magnifying-glass" aria-hidden="true"></span></a>
+          <ul class="search-form dropdown-menu dropdown-menu-end">
+            <li>
+              <div id="pagefind-search"></div>
+            </li>
+          </ul>
+        </li>
       </ul>
     </div>
   </div>
 </nav>
+<script>
+  (() => {
+    const here = location.pathname.split("/").pop() || "index.html";
+    document.querySelectorAll(".sourcelume-nav .nav-link[href], .sourcelume-nav .dropdown-item[href]").forEach(a => {
+      if (a.getAttribute("href") === here) {
+        a.classList.add("active");
+        a.setAttribute("aria-current", "page");
+        a.closest(".nav-item.dropdown")?.querySelector(".nav-link")?.classList.add("active");
+      }
+    });
+
+    const searchToggle = document.querySelector(".nav-search-toggle");
+    document.addEventListener("keydown", e => {
+      const typing = /^(input|textarea|select)$/i.test(e.target.tagName) || e.target.isContentEditable;
+      const k = e.key.toLowerCase();
+      if (!(((e.ctrlKey || e.metaKey) && k === "k") || (k === "/" && !typing))) return;
+      e.preventDefault();
+      const dd = window.bootstrap?.Dropdown?.getOrCreateInstance(searchToggle);
+      dd ? dd.show() : searchToggle.click();
+      setTimeout(() => document.querySelector("#pagefind-search input")?.focus(), 50);
+    });
+  })();
+</script>

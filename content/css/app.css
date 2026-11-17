@@ -158,47 +158,90 @@ a:hover {
 }
 
 .navbar .nav-link {
+  position: relative;
   font-size: 0.9375rem;
+  font-weight: 500;
   color: var(--sourcelume-muted);
   padding: 0.35rem 0.75rem;
-  border-bottom: 2px solid transparent;
   text-decoration: none;
+  transition: color 0.15s ease;
+}
+/* ::before, not ::after — Bootstrap's .dropdown-toggle::after is the caret. */
+.navbar .nav-link::before {
+  content: "";
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0;
+  height: 2px;
+  background: var(--sourcelume-accent);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.18s ease;
 }
 .navbar .nav-link:hover,
 .navbar .nav-link:focus { color: var(--sourcelume-ink); }
+.navbar .nav-link:hover::before,
+.navbar .nav-link:focus-visible::before,
+.navbar .nav-link.active::before { transform: scaleX(1); }
 .navbar .nav-link.active,
-.navbar .nav-item.active > .nav-link {
-  color: var(--sourcelume-ink);
-  border-bottom-color: var(--sourcelume-accent);
-}
+.navbar .nav-item.active > .nav-link { color: var(--sourcelume-ink); }
 
 .dropdown-menu {
   border: 1px solid var(--sourcelume-rule);
-  border-radius: 8px;
-  box-shadow: 0 6px 20px rgba(21, 24, 29, 0.08);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(21, 24, 29, 0.12);
   padding: 0.4rem;
   font-size: 0.9375rem;
+  margin-top: 0.4rem;
+}
+.dropdown-menu.show { animation: nav-drop 0.15s ease; }
+@keyframes nav-drop {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 .dropdown-item {
-  border-radius: 5px;
-  padding: 0.4rem 0.65rem;
+  border-radius: 6px;
+  padding: 0.45rem 0.7rem;
   color: var(--sourcelume-body);
   text-decoration: none;
+  transition: background 0.12s ease, color 0.12s ease;
 }
-.dropdown-item:hover { background: var(--sourcelume-soft); color: var(--sourcelume-ink); }
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background: rgba(178, 19, 38, 0.06);
+  color: var(--sourcelume-accent-dark);
+}
+.dropdown-item.active {
+  background: rgba(178, 19, 38, 0.08);
+  color: var(--sourcelume-accent-dark);
+  font-weight: 500;
+}
+.dropdown-divider { border-color: var(--sourcelume-rule-soft); }
+
+.navbar-toggler { border: 1px solid var(--sourcelume-rule); border-radius: 8px; }
+.navbar-toggler:focus { box-shadow: 0 0 0 0.2rem rgba(178, 19, 38, 0.15); }
 
 /* Persistent support CTA in the navbar. */
 .sourcelume-support {
   display: inline-block;
   font-size: 0.875rem;
+  font-weight: 500;
   color: #fff !important;
   background: var(--sourcelume-accent);
-  padding: 0.4rem 0.85rem;
+  padding: 0.4rem 0.9rem;
   border-radius: 6px;
   text-decoration: none !important;
   white-space: nowrap;
+  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
-.sourcelume-support:hover { background: var(--sourcelume-accent-dark); color: #fff !important; }
+.sourcelume-support:hover {
+  background: var(--sourcelume-accent-dark);
+  color: #fff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(178, 19, 38, 0.25);
+}
 
 /* --------------------------------------------------------------------------
    Prose elements
@@ -423,12 +466,32 @@ hr { border: none; border-top: 1px solid var(--sourcelume-rule); margin: 2.5rem 
 
 .search-form {
   right: 0;
-  left: initial !important;
-  min-width: 25vw;
-  max-width: 90vw;
+  left: auto !important;
+  width: 22rem;
+  min-width: 0;
+  max-width: 92vw;
   max-height: calc(95vh - 100px);
   overflow: auto;
-  margin-top: 5px;
+  margin-top: 0.4rem;
+  list-style: none;
+}
+.search-form > li { padding: 0.6rem 0.75rem; }
+
+.nav-search-toggle { font-size: 1rem; }
+.nav-search-toggle .fa-magnifying-glass { vertical-align: -0.05em; }
+
+/* Theme Pagefind's default UI to the site palette (vars it exposes). */
+#pagefind-search {
+  --pagefind-ui-font: var(--sourcelume-sans);
+  --pagefind-ui-primary: var(--sourcelume-accent);
+  --pagefind-ui-text: var(--sourcelume-body);
+  --pagefind-ui-background: #ffffff;
+  --pagefind-ui-border: var(--sourcelume-rule);
+  --pagefind-ui-tag: var(--sourcelume-soft);
+  --pagefind-ui-border-width: 1px;
+  --pagefind-ui-border-radius: 8px;
+  --pagefind-ui-image-border-radius: 8px;
+  --pagefind-ui-scale: 0.9;
 }
 
 :focus-visible {
@@ -437,6 +500,30 @@ hr { border: none; border-top: 1px solid var(--sourcelume-rule); margin: 2.5rem 
   border-radius: 3px;
 }
 
+
+/* Collapsed (hamburger) menu: the open panel needs a rule and the dropdowns
+   should read as sub-items, not floating panels. */
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    margin-left: 0 !important;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--sourcelume-rule);
+  }
+  .navbar-nav .nav-item { padding: 0.15rem 0; }
+  .navbar-nav .dropdown-menu {
+    box-shadow: none;
+    border: none;
+    padding-left: 1rem;
+    margin-top: 0;
+  }
+  .navbar-nav .dropdown-menu.show { animation: none; }
+  .navbar-nav.align-items-lg-center {
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--sourcelume-rule-soft);
+  }
+}
 
 @media (max-width: 768px) {
   body { font-size: 1rem; }
