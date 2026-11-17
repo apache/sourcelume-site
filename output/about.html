@@ -111,7 +111,7 @@ consistent, verifiable documentation possible for those who choose to use it.</p
 <h2>Apache Sourcelume Workflow</h2>
 <pre><code class="language-mermaid">graph TD
     A[Dataset producers &amp; curators] --&gt;|cli ingest / attest| B[Sourcelume Attest]
-    B --&gt;|signed records JSON-LD| C[Sourcelume Registry&lt;br/&gt;Apache Atlas]
+    B --&gt;|signed records JSON-LD| C[Sourcelume Registry]
     C --&gt;|REST / GraphQL| D[Sourcelume Explorer]
     C --&gt;|REST / GraphQL| E[Machine consumers&lt;br/&gt;trainers, auditors]
 </code></pre>

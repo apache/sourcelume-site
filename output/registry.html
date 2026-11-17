@@ -104,13 +104,18 @@
 It provides a stable, queryable endpoint for dataset consumers and auditors to
 verify provenance claims.</p>
 <h2>Current Implementation vs. Target Architecture</h2>
-<p>The Registry is evolving. While the high-level architecture describes the target enterprise-grade system, we currently provide a lightweight implementation via our <strong><a href="https://github.com/apache/sourcelume-registry/tree/main/examples/simple-demo">Simple Demo</a></strong>. This demo allows you to experience the core registry workflows&mdash;ingestion and querying&mdash;without the complexity of the full Apache Atlas backend.</p>
+<p>The Registry is evolving. The current implementation is a Quarkus service that validates,
+stores, and resolves provenance records through a REST API. Storage is pluggable through a
+storage SPI: the <strong>PostgreSQL distribution</strong> is the default backend, and an <strong>Apache Atlas
+distribution</strong> is also available. The high-level architecture below describes the target
+enterprise-grade system, and the <strong><a href="https://github.com/apache/sourcelume-registry/tree/main/examples/simple-demo">Simple Demo</a></strong>
+remains a lightweight way to try the core registry workflows without a real backend.</p>
 <h2>Quick Start: Simple Demo</h2>
-<p>Want to see the registry in action right now? The <code>simple-demo</code> provides a lightweight, standalone implementation of the core registry concepts.</p>
+<p>Want to see the registry in action without any infrastructure? The <code>simple-demo</code> provides a lightweight, standalone implementation of the core registry concepts.</p>
 <ul>
 <li><strong>Purpose</strong>: Demonstrates the fundamental REST API workflows for provenance.</li>
 <li><strong>Ideal for</strong>: Rapid prototyping, understanding basic data flow, and local testing.</li>
-<li><strong>Key Difference</strong>: Uses an in-memory store instead of Apache Atlas.</li>
+<li><strong>Key Difference</strong>: Uses an in-memory store instead of a persistent backend.</li>
 </ul>
 <p><strong><a href="https://github.com/apache/sourcelume-registry/tree/main/examples/simple-demo">View the Simple Demo on GitHub &rarr;</a></strong></p>
 <p>To see the whole stack &mdash; training a small model and publishing its provenance records &mdash;
@@ -134,7 +139,7 @@ the registry; the OpenAPI document describes what the registry implements today.
 <pre><code class="language-mermaid">graph LR
     A[Data Producers] --&gt;|Signed Attestations| B[Attestation Pipeline]
     B --&gt;|Ingest| C[Registry Core]
-    C --&gt;|Store| D[Apache Atlas]
+    C --&gt;|Store| D[Metadata store]
     D --&gt;|Lineage &amp; Metadata| C
     C --&gt;|REST API| E[Explorer UI]
     C --&gt;|GraphQL API| F[Machine Consumers]
@@ -144,14 +149,14 @@ the registry; the OpenAPI document describes what the registry implements today.
 <ol>
 <li><strong>Data Producers</strong> &rarr; Signed Attestations &rarr; <strong>Attestation Pipeline</strong></li>
 <li><strong>Attestation Pipeline</strong> &rarr; Ingest &rarr; <strong>Registry Core</strong></li>
-<li><strong>Registry Core</strong> &harr; Store/Retrieve &harr; <strong>Apache Atlas</strong></li>
+<li><strong>Registry Core</strong> &harr; Store/Retrieve &harr; <strong>Metadata store</strong></li>
 <li><strong>Registry Core</strong> &rarr; REST API &rarr; <strong>Explorer UI</strong></li>
 <li><strong>Registry Core</strong> &rarr; GraphQL API &rarr; <strong>Machine Consumers</strong></li>
 <li><strong>Registry Core</strong> &rarr; REST API &rarr; <strong>Auditors</strong></li>
 </ol>
 <p><strong>Key Components:</strong></p>
 <ul>
-<li><strong>Apache Atlas Backend</strong> &mdash; Provides robust metadata management, lineage tracking, and graph-based querying</li>
+<li><strong>Metadata store</strong> &mdash; Pluggable through the storage SPI; PostgreSQL is the default distribution today, and the Apache Atlas distribution adds lineage tracking and graph-based querying</li>
 <li><strong>Attestation Ingestion</strong> &mdash; Validates and processes signed provenance records</li>
 <li><strong>REST &amp; GraphQL APIs</strong> &mdash; Dual interface for human-readable exploration and programmatic access</li>
 <li><strong>Verification Engine</strong> &mdash; Cryptographic signature validation and chain-of-custody verification</li>
@@ -162,7 +167,7 @@ the registry; the OpenAPI document describes what the registry implements today.
 <ul>
 <li><strong>Java 21</strong> &mdash; Modern Java with performance improvements and language features</li>
 <li><strong>CDI (Contexts and Dependency Injection)</strong> &mdash; Enterprise dependency injection and lifecycle management</li>
-<li><strong>Apache Atlas</strong> &mdash; Metadata repository with built-in lineage and governance capabilities</li>
+<li><strong>Storage SPI</strong> &mdash; Pluggable metadata backends; PostgreSQL (default distribution) and Apache Atlas</li>
 <li><strong>REST &amp; GraphQL</strong> &mdash; Dual API layer for flexible access patterns</li>
 </ul>
 <h3>Core Modules</h3>
@@ -171,20 +176,20 @@ the registry; the OpenAPI document describes what the registry implements today.
     B --&gt; C[Attestation Validator]
     B --&gt; D[Lineage Tracker]
     B --&gt; E[Query Engine]
-    C --&gt; F[Atlas Client]
+    C --&gt; F[Storage Client]
     D --&gt; F
     E --&gt; F
-    F --&gt; G[Apache Atlas]
+    F --&gt; G[Metadata store]
 </code></pre>
 <p>The Registry architecture consists of several layered modules:</p>
 <ul>
 <li><strong>API Layer</strong> &mdash; REST and GraphQL endpoints with authentication and rate limiting</li>
 <li><strong>Service Layer</strong> &mdash; Business logic that coordinates attestation processing, verification, and querying</li>
 <li><strong>Attestation Validator</strong> &mdash; Cryptographic signature verification and schema validation</li>
-<li><strong>Lineage Tracker</strong> &mdash; Manages provenance chains and dataset relationships in Atlas</li>
-<li><strong>Query Engine</strong> &mdash; Optimized queries against Atlas for common access patterns</li>
-<li><strong>Atlas Client</strong> &mdash; Integration layer with Apache Atlas metadata store</li>
-<li><strong>Apache Atlas</strong> &mdash; Underlying metadata repository and lineage store</li>
+<li><strong>Lineage Tracker</strong> &mdash; Manages provenance chains and dataset relationships in the metadata store</li>
+<li><strong>Query Engine</strong> &mdash; Optimized queries against the metadata store for common access patterns</li>
+<li><strong>Storage Client</strong> &mdash; Integration layer with the pluggable storage backend</li>
+<li><strong>Metadata store</strong> &mdash; Underlying repository for records and lineage (PostgreSQL or Apache Atlas today)</li>
 </ul>
 <h3>Data Flow</h3>
 <ol>
@@ -195,7 +200,7 @@ the registry; the OpenAPI document describes what the registry implements today.
 <li>Signature validated against known public keys</li>
 <li>Schema validated against Sourcelume specification</li>
 <li>Metadata extracted and normalized</li>
-<li>Record stored in Atlas with lineage relationships</li>
+<li>Record stored in the metadata store with lineage relationships</li>
 <li>Confirmation returned to producer</li>
 </ul>
 </li>
@@ -203,7 +208,7 @@ the registry; the OpenAPI document describes what the registry implements today.
 <p><strong>Query Workflow</strong></p>
 <ul>
 <li>Consumer requests provenance for dataset identifier</li>
-<li>Query engine translates to Atlas lineage query</li>
+<li>Query engine translates to a store-specific lineage query</li>
 <li>Results filtered and formatted</li>
 <li>Signature proofs included in response</li>
 <li>Response returned via REST or GraphQL</li>
@@ -214,7 +219,7 @@ the registry; the OpenAPI document describes what the registry implements today.
 <ul>
 <li>Auditor submits attestation for verification</li>
 <li>Registry checks signature validity</li>
-<li>Lineage chain reconstructed from Atlas</li>
+<li>Lineage chain reconstructed from the metadata store</li>
 <li>Chain-of-custody validated</li>
 <li>Verification report generated</li>
 </ul>
@@ -254,7 +259,7 @@ type Query {
 </code></pre>
 <ul>
 <li><strong>Maven</strong> &mdash; Build tool</li>
-<li><strong>Docker</strong> &mdash; For running Apache Atlas locally</li>
+<li><strong>Docker</strong> &mdash; For running the storage backend locally</li>
 <li><strong>Git</strong> &mdash; Version control</li>
 </ul>
 <h3>Local Development Environment</h3>
@@ -266,72 +271,56 @@ type Query {
 </code></pre>
 <ol start="2">
 <li>
-<p><strong>Start development dependencies</strong></p>
-<p>The <code>dev-support</code> directory contains Docker Compose configurations for local testing:</p>
+<p><strong>Start a storage backend</strong></p>
+<p>The <code>dev-support</code> directory contains Docker Compose files for the supported backends.
+For the default PostgreSQL distribution:</p>
 </li>
 </ol>
-<pre><code class="language-bash">   cd dev-support
-   docker-compose up -d
+<pre><code class="language-bash">   docker compose -f dev-support/docker-compose.postgres.yml up -d --wait
 </code></pre>
-<p>This starts:</p>
-<ul>
-<li>Apache Atlas on <code>localhost:21000</code></li>
-<li>Kafka (Atlas dependency) on <code>localhost:9092</code></li>
-<li>Any other required services</li>
-</ul>
+<p>For the Apache Atlas distribution, start a local Atlas 2.5.0 stack instead (Atlas
+runs on <code>localhost:21000</code>, default credentials <code>admin</code> / <code>atlasR0cks!</code>).</p>
 <ol start="3">
-<li>
-<p><strong>Configure CDI</strong></p>
-<p>The project uses CDI for dependency injection. Configuration files are typically in:</p>
-<ul>
-<li><code>src/main/resources/META-INF/beans.xml</code> &mdash; CDI bean discovery</li>
-<li><code>src/main/resources/application.properties</code> &mdash; Application configuration</li>
-</ul>
-<p>For local development, override settings:</p>
-</li>
-</ol>
-<pre><code class="language-properties">   atlas.rest.address=http://localhost:21000
-   registry.signing.verify=false  # For local testing only
-</code></pre>
-<ol start="4">
 <li><strong>Build the project</strong></li>
 </ol>
 <pre><code class="language-bash">   mvn clean install
 </code></pre>
-<ol start="5">
-<li><strong>Run the Registry</strong></li>
+<ol start="4">
+<li>
+<p><strong>Run the Registry</strong></p>
+<p>The repository ships two distributions &mdash; one per storage plugin:</p>
+</li>
 </ol>
-<pre><code class="language-bash">   mvn quarkus:dev  # If using Quarkus
+<pre><code class="language-bash">   mvn -pl sourcelume-registry-distribution-postgres quarkus:dev
    # or
-   java -jar target/sourcelume-registry-{version}.jar
+   mvn -pl sourcelume-registry-distribution-atlas quarkus:dev
 </code></pre>
-<p>The Registry API will be available at <code>http://localhost:8080</code></p>
+<p>The Registry API will be available at <code>http://localhost:8082</code>, with OpenAPI at
+<code>/q/openapi</code>, Swagger UI at <code>/q/swagger-ui</code>, and health at <code>/q/health/ready</code>.</p>
+<p>See
+<a href="https://github.com/apache/sourcelume-registry/blob/main/dev-support/README.md"><code>dev-support/README.md</code></a>
+for the full matrix of backend and distribution combinations.</p>
 <h3>Testing Against Local Registry</h3>
-<p>The <code>dev-support</code> directory includes:</p>
-<ul>
-<li><strong>Sample attestations</strong> &mdash; Test data for development</li>
-<li><strong>Test scripts</strong> &mdash; Shell scripts to submit and query test data</li>
-<li><strong>Docker profiles</strong> &mdash; Different configurations for various scenarios</li>
-</ul>
+<p>The <code>dev-support</code> directory includes Docker Compose configurations for the supported storage backends.</p>
 <p><strong>Run integration tests:</strong></p>
-<pre><code class="language-text">mvn verify -Pintegration-tests
+<pre><code class="language-bash">mvn verify -Pintegration-tests -pl sourcelume-registry-distribution-atlas
 </code></pre>
-<p><strong>Submit a test attestation:</strong></p>
-<pre><code class="language-text">bash curl -X POST [http://localhost:8080/api/v1/attestations](http://localhost:8080/api/v1/attestations)
--H "Content-Type: application/json"
--d @dev-support/samples/sample-attestation.json
+<p><strong>Publish a record:</strong></p>
+<pre><code class="language-bash">curl -X POST http://localhost:8082/records \
+  -H "Content-Type: application/ld+json" \
+  --data-binary @examples/simple-demo/sample-provenance-record.jsonld
 </code></pre>
-<p><strong>Query via GraphQL:</strong></p>
-<pre><code class="language-text">bash curl -X POST [http://localhost:8080/graphql](http://localhost:8080/graphql)
--H "Content-Type: application/json"
--d '{"query": "{ attestation(id: "test-123") { datasetId producer { name } } }"}'
+<p><strong>Read it back (references resolved on read):</strong></p>
+<pre><code class="language-bash">curl http://localhost:8082/records/&lt;url-encoded-record-id&gt;
+</code></pre>
+<p><strong>Query the dataset views:</strong></p>
+<pre><code class="language-bash">curl "http://localhost:8082/api/v1/datasets?qualifiedName=&lt;record-id&gt;"
 </code></pre>
 <h3>Development Tips</h3>
 <ul>
-<li><strong>Hot Reload</strong> &mdash; If using Quarkus, changes to Java classes are reloaded automatically in dev mode</li>
-<li><strong>Atlas UI</strong> &mdash; Access Atlas UI at <code>http://localhost:21000</code> to browse metadata and lineage</li>
+<li><strong>Hot Reload</strong> &mdash; <code>quarkus:dev</code> reloads Java changes automatically in dev mode</li>
+<li><strong>Atlas UI</strong> &mdash; When using the Atlas distribution, <code>http://localhost:21000</code> exposes the Atlas UI for browsing metadata and lineage</li>
 <li><strong>Logging</strong> &mdash; Set <code>quarkus.log.level=DEBUG</code> for verbose output during development</li>
-<li><strong>Mock Mode</strong> &mdash; Set <code>registry.mock=true</code> to run without Atlas for rapid API testing</li>
 </ul>
 <h2>Registry Repository</h2>
 <p>The Sourcelume Registry is actively developed in its own repository:</p>
