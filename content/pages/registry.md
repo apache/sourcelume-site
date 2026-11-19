@@ -247,7 +247,21 @@ curl -X POST http://localhost:8082/records \
 curl http://localhost:8082/records/<url-encoded-record-id>
 ```
 
-**Query the dataset views:**
+**Search records by type, status, and facets (served by every backend):**
+
+```bash
+curl "http://localhost:8082/records?type=ProvenanceRecord&status=VALIDATED"
+```
+
+`type` and `status` are required. Facet filters are repeatable — `license`,
+`trainingDataset`, `creatorName`, `custodyAgent` — matching any value within
+one facet and every facet across them; `limit` defaults to 100:
+
+```bash
+curl "http://localhost:8082/records?type=TrainingProvenanceRecord&status=VALIDATED&trainingDataset=<record-iri>"
+```
+
+**Query the dataset views (Atlas distribution only):**
 
 ```bash
 curl "http://localhost:8082/api/v1/datasets?qualifiedName=<record-id>"
