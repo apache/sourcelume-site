@@ -68,3 +68,4 @@ If you're interested in becoming a committer, please refer to this Apache [Contr
 | Achim Nierbeck | anierbeck | ✓ | codecentric |
 | JB Onofré | jbonofre | ✓ | |
 | Raúl Cumplido | raulcd | ✓ | QuantStack |
+| Vignesh Nayak Manel | vmanel | | |
