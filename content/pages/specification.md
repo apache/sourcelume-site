@@ -21,7 +21,6 @@ IRI, not an approval state.
 
 ## Architecture
 
-...
 The Sourcelume Specification is designed for interoperability, verifiability, and long-term stability. Its architecture is built on several key pillars:
 
 ```mermaid
