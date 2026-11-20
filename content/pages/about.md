@@ -24,5 +24,6 @@ graph TD
 Sourcelume builds on and aligns with existing standards rather than competing with them,
 including the MIT Data Provenance Initiative, the AI Alliance's Open Trusted Data
 Initiative, MLCommons Croissant, the SPDX AI Profile, and the Content Authenticity
-Initiative's C2PA work. It also builds on several existing Apache projects, including
-Atlas, Iceberg, Parquet, NiFi, and Airflow.
+Initiative's C2PA work. Within the Apache ecosystem, the Registry's pluggable
+storage ships an Apache Atlas backend for deployments that already run Atlas,
+alongside the default PostgreSQL distribution.
