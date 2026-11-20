@@ -336,7 +336,15 @@ for the full matrix of backend and distribution combinations.</p>
 <p><strong>Read it back (references resolved on read):</strong></p>
 <pre><code class="language-bash">curl http://localhost:8082/records/&lt;url-encoded-record-id&gt;
 </code></pre>
-<p><strong>Query the dataset views:</strong></p>
+<p><strong>Search records by type, status, and facets (served by every backend):</strong></p>
+<pre><code class="language-bash">curl "http://localhost:8082/records?type=ProvenanceRecord&amp;status=VALIDATED"
+</code></pre>
+<p><code>type</code> and <code>status</code> are required. Facet filters are repeatable &mdash; <code>license</code>,
+<code>trainingDataset</code>, <code>creatorName</code>, <code>custodyAgent</code> &mdash; matching any value within
+one facet and every facet across them; <code>limit</code> defaults to 100:</p>
+<pre><code class="language-bash">curl "http://localhost:8082/records?type=TrainingProvenanceRecord&amp;status=VALIDATED&amp;trainingDataset=&lt;record-iri&gt;"
+</code></pre>
+<p><strong>Query the dataset views (Atlas distribution only):</strong></p>
 <pre><code class="language-bash">curl "http://localhost:8082/api/v1/datasets?qualifiedName=&lt;record-id&gt;"
 </code></pre>
 <h3>Development Tips</h3>
