@@ -5,6 +5,15 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAQ - Apache Sourcelume</title>
+<meta name="color-scheme" content="light dark">
+<script>
+  try {
+    var savedScheme = localStorage.getItem("color-scheme");
+    if (savedScheme === "light" || savedScheme === "dark") {
+      document.querySelector('meta[name="color-scheme"]').content = savedScheme;
+    }
+  } catch (e) {}
+</script>
 <link rel="icon" href="images/rai-mark.svg" type="image/svg+xml">
 <link rel="shortcut icon" href="https://apache.org/favicons/favicon.ico">
 <meta name="description" content="Open source infrastructure for AI training-data provenance.">
@@ -13,6 +22,7 @@
 <link href="css/headerlink.css" rel="stylesheet">
 <link href="css/app.css" rel="stylesheet">
 <link href="highlight/github.min.css" rel="stylesheet">
+<link href="css/theme.css" rel="stylesheet">
 <script src="highlight/highlight.min.js"></script>
 <script src="js/mermaid.min.js"></script>
 <!-- pagefind search -->
@@ -31,7 +41,7 @@
 </script>
 <script>
   mermaid.initialize({
-    startOnLoad: true,
+    startOnLoad: false,
     theme: "default"
   });
 </script>  </head>
@@ -81,6 +91,18 @@
             <li><a class="dropdown-item" href="https://www.apache.org/security/">Security</a></li>
             <li><a class="dropdown-item" href="https://privacy.apache.org/policies/privacy-policy-public.html">Privacy policy</a></li>
           </ul>
+        </li>
+        <li class="nav-item">
+          <button type="button" class="nav-link nav-theme-toggle" id="theme-toggle" title="Toggle color theme">
+            <span class="theme-option-dark">
+              <span class="fa-solid fa-moon" aria-hidden="true"></span>
+              <span class="visually-hidden">Switch to dark theme</span>
+            </span>
+            <span class="theme-option-light">
+              <span class="fa-solid fa-sun" aria-hidden="true"></span>
+              <span class="visually-hidden">Switch to light theme</span>
+            </span>
+          </button>
         </li>
         <li class="nav-item dropdown">
           <a href="javascript:void(0)" class="nav-link nav-search-toggle" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-label="Search" title="Search (Ctrl+K or /)"><span class="fa-solid fa-magnifying-glass" aria-hidden="true"></span></a>
@@ -180,6 +202,7 @@ tooling, ecosystem support for AI-focused projects, and a place to share good pr
     </footer>      </div>
     </main>
     <script src="js/bootstrap.bundle.min.js" integrity="sha384-TYMA+uAx4f43rilxPIhmlqA+Vi+xbyMe+YVR3BcL15NyHLqd+7WYNtyBPdayiOPx"></script>
+    <script src="js/theme.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
       function decodeHtmlEntities(str) {
@@ -187,23 +210,25 @@ tooling, ecosystem support for AI-focused projects, and a place to share good pr
         txt.innerHTML = str;
         return txt.value;
       }
-      document.querySelectorAll("pre > code.language-mermaid").forEach((code, i) => {
+      document.querySelectorAll("pre > code.language-mermaid").forEach((code) => {
         let decoded = decodeHtmlEntities(code.innerHTML);
         // Normalize whitespace
         decoded = decoded.replace(/\t/g, "    ");
         decoded = decoded.replace(/^\s*\n/, "").replace(/\n\s*$/, "");
         const div = document.createElement("div");
         div.className = "mermaid";
+        div.dataset.mermaidSrc = decoded;
         div.textContent = decoded;
         code.parentElement.replaceWith(div);
-        console.log(`=== Mermaid block ${i} ===`);
-        console.log(decoded);
       });
-      // Mermaid v10+ runs asynchronously
-      mermaid.run({ querySelector: ".mermaid" })
-        .catch(err => {
-          console.error("Mermaid rendering failed:", err);
-        });
+      if (typeof window.sourcelumeRenderMermaid === "function") {
+        window.sourcelumeRenderMermaid();
+      } else {
+        mermaid.run({ querySelector: ".mermaid" })
+          .catch(err => {
+            console.error("Mermaid rendering failed:", err);
+          });
+      }
       });
     </script>
     <script>hljs.highlightAll();</script>  </body>
