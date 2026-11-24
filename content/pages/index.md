@@ -94,6 +94,7 @@ graph TD
 | [About](about.html) | About Apache Sourcelume |
 | [Specification](specification.html) | The metadata specification for provenance records |
 | [Registry](registry.html) | The reference registry for provenance records |
+| [Tooling](tooling.html) | Build-system plugins for generating, validating, and publishing records |
 | [Sample](sample.html) | An end-to-end training sample with full provenance |
 | [Get involved](get-involved.html) | Mailing list, chat, and how to contribute |
 | [FAQ](faq.html) | Short answers to common questions |
