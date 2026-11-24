@@ -38,7 +38,7 @@
   --sourcelume-width:    44rem;  /* content column; rem not ch, so it does not
                              shrink inside smaller-type blocks */
   --sourcelume-nav-h:    62px;
-  --sourcelume-mark-h:   34px;   /* nav logo height; below ~28px the veins mush */
+  --sourcelume-mark-h:   26px;   /* nav wordmark height */
 
   --sourcelume-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
               Arial, "Noto Sans", sans-serif;
