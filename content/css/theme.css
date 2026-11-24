@@ -1,0 +1,342 @@
+/* Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       https://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License. */
+
+/* ==========================================================================
+   Light / dark theme tokens, overrides, and smooth view transitions.
+   Follows <meta name="color-scheme"> synced to CSS color-scheme on :root.
+   ========================================================================== */
+
+:root {
+  color-scheme: light dark;
+
+  /* Raw light / dark palette pairs (WCAG AA >= 4.5:1 text, >= 3:1 UI) */
+  --sl-bg-light:              #ffffff;
+  --sl-bg-dark:               #0f1318;
+  --sl-surface-light:         #ffffff;
+  --sl-surface-dark:          #161b22;
+  --sl-soft-light:            #f7f8fa;
+  --sl-soft-dark:             #1c222b;
+  --sl-nav-bg-light:          rgba(255, 255, 255, 0.92);
+  --sl-nav-bg-dark:           rgba(15, 19, 24, 0.92);
+
+  --sl-ink-light:             #15181d;
+  --sl-ink-dark:              #eef2f6;
+  --sl-body-light:            #3d4652;
+  --sl-body-dark:             #c8d1dc;
+  --sl-muted-light:           #5a6472;
+  --sl-muted-dark:            #9aa6b5;
+  --sl-faint-light:           #7a838f;
+  --sl-faint-dark:            #8894a4;
+  --sl-quote-light:           #2b333d;
+  --sl-quote-dark:            #d5dde7;
+
+  --sl-rule-light:            #e6e8ec;
+  --sl-rule-dark:             #2b3340;
+  --sl-rule-soft-light:       #eceef1;
+  --sl-rule-soft-dark:        #232a35;
+  --sl-th-rule-light:         #d7dbe1;
+  --sl-th-rule-dark:          #36404f;
+
+  --sl-accent-light:          #b21326;
+  --sl-accent-dark-mode:      #e03e52;
+  --sl-link-light:            #8c0a22;
+  --sl-link-dark:             #f26b7a;
+  --sl-link-ul-light:         rgba(140, 10, 34, 0.35);
+  --sl-link-ul-dark:          rgba(242, 107, 122, 0.45);
+  --sl-hover-tint-light:      rgba(178, 19, 38, 0.06);
+  --sl-hover-tint-dark:       rgba(242, 107, 122, 0.14);
+  --sl-active-tint-light:     rgba(178, 19, 38, 0.08);
+  --sl-active-tint-dark:      rgba(242, 107, 122, 0.2);
+
+  --sl-btn-border-light:      #d3d8e0;
+  --sl-btn-border-dark:       #384252;
+  --sl-btn-border-hv-light:   #bfc6d0;
+  --sl-btn-border-hv-dark:    #505d72;
+  --sl-btn-pri-bg-light:      #15181d;
+  --sl-btn-pri-bg-dark:       #eef2f6;
+  --sl-btn-pri-bg-hv-light:   #000000;
+  --sl-btn-pri-bg-hv-dark:    #ffffff;
+  --sl-btn-pri-fg-light:      #ffffff;
+  --sl-btn-pri-fg-dark:       #0f1318;
+  --sl-shadow-light:          rgba(21, 24, 29, 0.12);
+  --sl-shadow-dark:           rgba(0, 0, 0, 0.48);
+
+  /* Fallback defaults for browsers without light-dark() */
+  --sourcelume-bg:            var(--sl-bg-light);
+  --sourcelume-surface:       var(--sl-surface-light);
+  --sourcelume-soft:          var(--sl-soft-light);
+  --sourcelume-nav-bg:        var(--sl-nav-bg-light);
+  --sourcelume-ink:           var(--sl-ink-light);
+  --sourcelume-body:          var(--sl-body-light);
+  --sourcelume-muted:         var(--sl-muted-light);
+  --sourcelume-faint:         var(--sl-faint-light);
+  --sourcelume-quote:         var(--sl-quote-light);
+  --sourcelume-rule:          var(--sl-rule-light);
+  --sourcelume-rule-soft:     var(--sl-rule-soft-light);
+  --sourcelume-th-rule:       var(--sl-th-rule-light);
+  --sourcelume-accent:        var(--sl-accent-light);
+  --sourcelume-accent-dark:   var(--sl-link-light);
+  --sourcelume-link-ul:       var(--sl-link-ul-light);
+  --sourcelume-hover-tint:    var(--sl-hover-tint-light);
+  --sourcelume-active-tint:   var(--sl-active-tint-light);
+  --sourcelume-btn-border:    var(--sl-btn-border-light);
+  --sourcelume-btn-border-hv: var(--sl-btn-border-hv-light);
+  --sourcelume-btn-pri-bg:    var(--sl-btn-pri-bg-light);
+  --sourcelume-btn-pri-bg-hv: var(--sl-btn-pri-bg-hv-light);
+  --sourcelume-btn-pri-fg:    var(--sl-btn-pri-fg-light);
+  --sourcelume-shadow:        var(--sl-shadow-light);
+
+  accent-color: var(--sourcelume-accent);
+}
+
+/* Reflect <meta name="color-scheme"> override back into CSS color-scheme */
+:root:has(> head > meta[name="color-scheme"][content="dark"]) {
+  color-scheme: dark;
+}
+:root:has(> head > meta[name="color-scheme"][content="light"]) {
+  color-scheme: light;
+}
+
+/* Fallback for browsers without light-dark() */
+@media (prefers-color-scheme: dark) {
+  :root:not(:has(> head > meta[name="color-scheme"][content="light"])) {
+    --sourcelume-bg:            var(--sl-bg-dark);
+    --sourcelume-surface:       var(--sl-surface-dark);
+    --sourcelume-soft:          var(--sl-soft-dark);
+    --sourcelume-nav-bg:        var(--sl-nav-bg-dark);
+    --sourcelume-ink:           var(--sl-ink-dark);
+    --sourcelume-body:          var(--sl-body-dark);
+    --sourcelume-muted:         var(--sl-muted-dark);
+    --sourcelume-faint:         var(--sl-faint-dark);
+    --sourcelume-quote:         var(--sl-quote-dark);
+    --sourcelume-rule:          var(--sl-rule-dark);
+    --sourcelume-rule-soft:     var(--sl-rule-soft-dark);
+    --sourcelume-th-rule:       var(--sl-th-rule-dark);
+    --sourcelume-accent:        var(--sl-accent-dark-mode);
+    --sourcelume-accent-dark:   var(--sl-link-dark);
+    --sourcelume-link-ul:       var(--sl-link-ul-dark);
+    --sourcelume-hover-tint:    var(--sl-hover-tint-dark);
+    --sourcelume-active-tint:   var(--sl-active-tint-dark);
+    --sourcelume-btn-border:    var(--sl-btn-border-dark);
+    --sourcelume-btn-border-hv: var(--sl-btn-border-hv-dark);
+    --sourcelume-btn-pri-bg:    var(--sl-btn-pri-bg-dark);
+    --sourcelume-btn-pri-bg-hv: var(--sl-btn-pri-bg-hv-dark);
+    --sourcelume-btn-pri-fg:    var(--sl-btn-pri-fg-dark);
+    --sourcelume-shadow:        var(--sl-shadow-dark);
+  }
+}
+
+/* Modern light-dark() tokens driven directly by computed color-scheme */
+@supports (color: light-dark(white, black)) {
+  :root {
+    --sourcelume-bg:            light-dark(var(--sl-bg-light), var(--sl-bg-dark));
+    --sourcelume-surface:       light-dark(var(--sl-surface-light), var(--sl-surface-dark));
+    --sourcelume-soft:          light-dark(var(--sl-soft-light), var(--sl-soft-dark));
+    --sourcelume-nav-bg:        light-dark(var(--sl-nav-bg-light), var(--sl-nav-bg-dark));
+    --sourcelume-ink:           light-dark(var(--sl-ink-light), var(--sl-ink-dark));
+    --sourcelume-body:          light-dark(var(--sl-body-light), var(--sl-body-dark));
+    --sourcelume-muted:         light-dark(var(--sl-muted-light), var(--sl-muted-dark));
+    --sourcelume-faint:         light-dark(var(--sl-faint-light), var(--sl-faint-dark));
+    --sourcelume-quote:         light-dark(var(--sl-quote-light), var(--sl-quote-dark));
+    --sourcelume-rule:          light-dark(var(--sl-rule-light), var(--sl-rule-dark));
+    --sourcelume-rule-soft:     light-dark(var(--sl-rule-soft-light), var(--sl-rule-soft-dark));
+    --sourcelume-th-rule:       light-dark(var(--sl-th-rule-light), var(--sl-th-rule-dark));
+    --sourcelume-accent:        light-dark(var(--sl-accent-light), var(--sl-accent-dark-mode));
+    --sourcelume-accent-dark:   light-dark(var(--sl-link-light), var(--sl-link-dark));
+    --sourcelume-link-ul:       light-dark(var(--sl-link-ul-light), var(--sl-link-ul-dark));
+    --sourcelume-hover-tint:    light-dark(var(--sl-hover-tint-light), var(--sl-hover-tint-dark));
+    --sourcelume-active-tint:   light-dark(var(--sl-active-tint-light), var(--sl-active-tint-dark));
+    --sourcelume-btn-border:    light-dark(var(--sl-btn-border-light), var(--sl-btn-border-dark));
+    --sourcelume-btn-border-hv: light-dark(var(--sl-btn-border-hv-light), var(--sl-btn-border-hv-dark));
+    --sourcelume-btn-pri-bg:    light-dark(var(--sl-btn-pri-bg-light), var(--sl-btn-pri-bg-dark));
+    --sourcelume-btn-pri-bg-hv: light-dark(var(--sl-btn-pri-bg-hv-light), var(--sl-btn-pri-bg-hv-dark));
+    --sourcelume-btn-pri-fg:    light-dark(var(--sl-btn-pri-fg-light), var(--sl-btn-pri-fg-dark));
+    --sourcelume-shadow:        light-dark(var(--sl-shadow-light), var(--sl-shadow-dark));
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Surface & component bindings
+   -------------------------------------------------------------------------- */
+
+body {
+  background-color: var(--sourcelume-bg);
+  color: var(--sourcelume-body);
+}
+
+#contents > .bg-white {
+  background-color: transparent !important;
+}
+
+a {
+  text-decoration-color: var(--sourcelume-link-ul);
+}
+
+.navbar.sourcelume-nav {
+  background: var(--sourcelume-nav-bg) !important;
+}
+
+.dropdown-menu {
+  background-color: var(--sourcelume-surface);
+  box-shadow: 0 10px 30px var(--sourcelume-shadow);
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background: var(--sourcelume-hover-tint);
+}
+
+.dropdown-item.active {
+  background: var(--sourcelume-active-tint);
+}
+
+blockquote {
+  color: var(--sourcelume-quote);
+}
+
+th {
+  border-bottom-color: var(--sourcelume-th-rule);
+}
+
+.mermaid,
+.sourcelume-card {
+  background: var(--sourcelume-surface);
+}
+
+.sourcelume-btn {
+  border-color: var(--sourcelume-btn-border);
+  background: var(--sourcelume-surface);
+}
+.sourcelume-btn:hover {
+  border-color: var(--sourcelume-btn-border-hv);
+}
+
+.sourcelume-btn-primary {
+  background: var(--sourcelume-btn-pri-bg);
+  border-color: var(--sourcelume-btn-pri-bg);
+  color: var(--sourcelume-btn-pri-fg);
+}
+.sourcelume-btn-primary:hover {
+  background: var(--sourcelume-btn-pri-bg-hv);
+  border-color: var(--sourcelume-btn-pri-bg-hv);
+  color: var(--sourcelume-btn-pri-fg);
+}
+
+.sourcelume-footer {
+  background: var(--sourcelume-bg);
+}
+
+#pagefind-search {
+  --pagefind-ui-background: var(--sourcelume-surface);
+}
+
+@media (max-width: 991.98px) {
+  .navbar.sourcelume-nav {
+    background: var(--sourcelume-bg) !important;
+  }
+  .navbar-collapse {
+    background: var(--sourcelume-bg);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Theme toggle button (both options in markup; inactive hidden via display:none)
+   -------------------------------------------------------------------------- */
+
+.nav-theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-theme-toggle .theme-option-light { display: none; }
+.nav-theme-toggle .theme-option-dark  { display: inline-flex; align-items: center; }
+
+/* Non-color dark-mode branches (toggle icons, logo inversion, hamburger, hljs) */
+:root:has(> head > meta[name="color-scheme"][content="dark"]) {
+  .nav-theme-toggle .theme-option-dark  { display: none; }
+  .nav-theme-toggle .theme-option-light { display: inline-flex; align-items: center; }
+  .navbar-brand img { filter: invert(1); mix-blend-mode: lighten; }
+  .navbar-toggler-icon { filter: invert(1); }
+  .hljs { color: #d8dee9; background: transparent; }
+  .hljs-comment, .hljs-quote { color: #8b949e; }
+  .hljs-keyword, .hljs-selector-tag, .hljs-subst { color: #ff7b72; }
+  .hljs-string, .hljs-doctag, .hljs-attr { color: #a5d6ff; }
+  .hljs-number, .hljs-literal, .hljs-variable { color: #79c0ff; }
+  .hljs-title, .hljs-section, .hljs-name { color: #d2a8ff; }
+  .hljs-built_in, .hljs-type { color: #ffa657; }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(:has(> head > meta[name="color-scheme"][content="light"])) {
+    .nav-theme-toggle .theme-option-dark  { display: none; }
+    .nav-theme-toggle .theme-option-light { display: inline-flex; align-items: center; }
+    .navbar-brand img { filter: invert(1); mix-blend-mode: lighten; }
+    .navbar-toggler-icon { filter: invert(1); }
+    .hljs { color: #d8dee9; background: transparent; }
+    .hljs-comment, .hljs-quote { color: #8b949e; }
+    .hljs-keyword, .hljs-selector-tag, .hljs-subst { color: #ff7b72; }
+    .hljs-string, .hljs-doctag, .hljs-attr { color: #a5d6ff; }
+    .hljs-number, .hljs-literal, .hljs-variable { color: #79c0ff; }
+    .hljs-title, .hljs-section, .hljs-name { color: #d2a8ff; }
+    .hljs-built_in, .hljs-type { color: #ffa657; }
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Smooth theme transitions (View Transitions API + CSS fallback)
+   Note: scrollbar-color is intentionally never transitioned (WebKit bug 311752).
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 280ms;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0ms;
+  }
+}
+
+html.theme-transitioning body,
+html.theme-transitioning .navbar.sourcelume-nav,
+html.theme-transitioning .sourcelume-card,
+html.theme-transitioning .sourcelume-footer,
+html.theme-transitioning .dropdown-menu,
+html.theme-transitioning .mermaid,
+html.theme-transitioning pre,
+html.theme-transitioning code,
+html.theme-transitioning .sourcelume-btn {
+  transition:
+    background-color 280ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 280ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 280ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (forced-colors: active) {
+  .navbar-brand img,
+  .navbar-toggler-icon {
+    filter: none;
+    mix-blend-mode: normal;
+  }
+}

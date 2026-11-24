@@ -1,3 +1,12 @@
+<meta name="color-scheme" content="light dark">
+<script>
+  try {
+    var savedScheme = localStorage.getItem("color-scheme");
+    if (savedScheme === "light" || savedScheme === "dark") {
+      document.querySelector('meta[name="color-scheme"]').content = savedScheme;
+    }
+  } catch (e) {}
+</script>
 <link rel="icon" href="images/rai-mark.svg" type="image/svg+xml">
 <link rel="shortcut icon" href="https://apache.org/favicons/favicon.ico">
 <meta name="description" content="{{ SITEDESC }}">
@@ -6,6 +15,7 @@
 <link href="css/headerlink.css" rel="stylesheet">
 <link href="css/app.css" rel="stylesheet">
 <link href="highlight/github.min.css" rel="stylesheet">
+<link href="css/theme.css" rel="stylesheet">
 <script src="highlight/highlight.min.js"></script>
 <script src="js/mermaid.min.js"></script>
 <!-- pagefind search -->
@@ -24,7 +34,7 @@
 </script>
 <script>
   mermaid.initialize({
-    startOnLoad: true,
+    startOnLoad: false,
     theme: "default"
   });
 </script>
