@@ -17,16 +17,16 @@ and release workflow.
 
 Each plugin follows the same three-step workflow against a [Sourcelume Registry](registry.html):
 
-1. **Generate** — extracts coordinates, license, creators, and origin from the project's
+1. **Generate**: extracts coordinates, license, creators, and origin from the project's
    build metadata (`pom.xml`, `pyproject.toml`, or `CMakeLists.txt`) into a
    `provenance-record.json` following the [v0.0.1 specification](specification.html).
-2. **Validate** — checks the record against the registry's `POST /records/validate`
+2. **Validate**: checks the record against the registry's `POST /records/validate`
    endpoint.
-3. **Publish** — submits the record to `POST /records` byte-for-byte unchanged so digests
+3. **Publish**: submits the record to `POST /records` byte-for-byte unchanged so digests
    and detached signatures stay intact, and fails the build if the registry stores the
    record as `INCOMPLETE`.
 
-Pre-authored records — including non-dataset types such as `TrainingProvenanceRecord` —
+Pre-authored records, including non-dataset types such as `TrainingProvenanceRecord`,
 can also be validated and published directly without regenerating from build metadata.
 
 ## Try it
