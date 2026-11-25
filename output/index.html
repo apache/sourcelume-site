@@ -29,15 +29,12 @@
 <link href="_pagefind/pagefind-ui.css" rel="stylesheet">
 <script src="_pagefind/pagefind-ui.js"></script>
 <script>
-  window.addEventListener('DOMContentLoaded', (event) => {
+  window.addEventListener('DOMContentLoaded', () => {
       new PagefindUI({ element: "#pagefind-search", showImages: false });
+      if (document.getElementById("page-404-search")) {
+          new PagefindUI({ element: "#page-404-search", showImages: false });
+      }
   });
-  var pageTitle = '';
-  if(pageTitle === '404'){
-      window.addEventListener('DOMContentLoaded', (event) => {
-          new PagefindUI({ element: "#page-404-search" });
-      });
-  }
 </script>
 <script>
   mermaid.initialize({
