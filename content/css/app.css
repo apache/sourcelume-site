@@ -481,7 +481,8 @@ hr { border: none; border-top: 1px solid var(--sourcelume-rule); margin: 2.5rem 
 .nav-search-toggle .fa-magnifying-glass { vertical-align: -0.05em; }
 
 /* Theme Pagefind's default UI to the site palette (vars it exposes). */
-#pagefind-search {
+#pagefind-search,
+#page-404-search {
   --pagefind-ui-font: var(--sourcelume-sans);
   --pagefind-ui-primary: var(--sourcelume-accent);
   --pagefind-ui-text: var(--sourcelume-body);
