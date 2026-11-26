@@ -302,6 +302,40 @@ pre {
 }
 pre code { background: none; border: none; padding: 0; font-size: 0.875rem; }
 
+.code-block-wrapper {
+  position: relative;
+  margin: 1.5rem 0;
+}
+.code-block-wrapper > pre {
+  margin: 0;
+  padding-right: 4.5rem;
+}
+.code-copy-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-family: var(--sourcelume-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.2;
+  padding: 0.25rem 0.55rem;
+  border-radius: 5px;
+  border: 1px solid var(--sourcelume-rule);
+  background: var(--sourcelume-surface, #fff);
+  color: var(--sourcelume-muted);
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+.code-copy-btn:hover,
+.code-copy-btn:focus-visible {
+  color: var(--sourcelume-ink);
+  border-color: var(--sourcelume-muted);
+}
+.code-copy-btn.is-copied {
+  color: var(--sourcelume-accent-dark);
+  border-color: var(--sourcelume-accent-dark);
+}
+
 hr { border: none; border-top: 1px solid var(--sourcelume-rule); margin: 2.5rem 0; }
 
 .mermaid {
