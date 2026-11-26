@@ -500,6 +500,25 @@ hr { border: none; border-top: 1px solid var(--sourcelume-rule); margin: 2.5rem 
   border-radius: 3px;
 }
 
+.skip-link {
+  position: fixed;
+  top: -100%;
+  left: 0.75rem;
+  z-index: 1050;
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  background: var(--sourcelume-ink);
+  color: var(--sourcelume-bg, #fff);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+.skip-link:focus,
+.skip-link:focus-visible {
+  top: 0.75rem;
+  color: var(--sourcelume-bg, #fff);
+}
+
 
 /* Collapsed (hamburger) menu: the open panel needs a rule and the dropdowns
    should read as sub-items, not floating panels. */

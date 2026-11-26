@@ -12,13 +12,14 @@
     {% include "styles.html" %}
   </head>
   <body class="d-flex flex-column h-100">
+    <a class="skip-link" href="#contents">Skip to main content</a>
     {% include "menu.html" %}
     <main class="flex-shrink-0"{% if page and page.slug == '404' %} data-pagefind-ignore{% endif %}>
       <div>
         {% include "generic.html" %}
-        {% include "footer.html" %}
       </div>
     </main>
+    {% include "footer.html" %}
     {% include "post.html" %}
   </body>
 </html>
