@@ -25,7 +25,8 @@ The sample lives in its own repository:
 - **[apache/sourcelume-sample](https://github.com/apache/sourcelume-sample)**
 
 The [README](https://github.com/apache/sourcelume-sample/blob/main/README.md) contains the
-quick start: train the model, validate both records against the current schemas, and publish
-them to a Sourcelume Registry instance. Everything runs locally on a small corpus, and the
-repository README describes the current state of each step, including the steps that
-deliberately do not work yet.
+quick start: train the model, validate both records against the current schemas and the
+registry, publish them via the Python plugin, and query back the resolved training data.
+Everything runs locally on a small corpus — `make demo-postgres` runs the full loop on the
+default PostgreSQL distribution (Docker only), and `make demo-atlas` runs it on the Apache
+Atlas stack.
