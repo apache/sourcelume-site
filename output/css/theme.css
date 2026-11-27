@@ -238,7 +238,8 @@ th {
   background: var(--sourcelume-bg);
 }
 
-#pagefind-search {
+#pagefind-search,
+#page-404-search {
   --pagefind-ui-background: var(--sourcelume-surface);
 }
 
