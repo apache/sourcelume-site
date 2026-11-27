@@ -409,6 +409,14 @@ hr { border: none; border-top: 1px solid var(--sourcelume-rule); margin: 2.5rem 
 
 .sourcelume-meta { font-size: 0.875rem; color: var(--sourcelume-faint); margin-top: -0.5rem; }
 
+.sourcelume-edit-page {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--sourcelume-rule-soft);
+  font-size: 0.875rem;
+  color: var(--sourcelume-muted);
+}
+
 /* Mobile nav: the expanded collapse must be opaque, and the desktop
    indent must not apply once items stack vertically. */
 @media (max-width: 991.98px) {
