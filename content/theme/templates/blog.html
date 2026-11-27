@@ -9,14 +9,15 @@
       {% include "styles.html" %}
   </head>
   <body class="d-flex flex-column h-100">
+    <a class="skip-link" href="#contents">Skip to main content</a>
     {% include "menu.html" %}
     <main class="flex-shrink-0">
         <div>
             {% include "breadcrumbs.html" %}
             {% include "blogindex.html" %}
-            {% include "footer.html" %}
         </div>
     </main>
+    {% include "footer.html" %}
     {% include "post.html" %}
   </body>
 </html>
