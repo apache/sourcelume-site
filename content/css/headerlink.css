@@ -4,6 +4,15 @@
 */
 .headerlink, .elementid-permalink {
     visibility: hidden;
+    margin-left: 0.4rem;
+    text-decoration: none;
+    color: var(--sourcelume-faint, #7a838f);
+    font-weight: 400;
+}
+.headerlink:hover,
+.headerlink:focus-visible {
+    color: var(--sourcelume-accent, #b21326);
+    text-decoration: none;
 }
 h1:hover > .headerlink,
 h2:hover > .headerlink,
@@ -11,6 +20,13 @@ h3:hover > .headerlink,
 h4:hover > .headerlink,
 h5:hover > .headerlink,
 h6:hover > .headerlink,
+h1:focus-within > .headerlink,
+h2:focus-within > .headerlink,
+h3:focus-within > .headerlink,
+h4:focus-within > .headerlink,
+h5:focus-within > .headerlink,
+h6:focus-within > .headerlink,
+.headerlink:focus,
 dt:hover > .elementid-permalink {
     visibility: visible
 }
