@@ -10,6 +10,27 @@
 <link rel="icon" href="images/rai-mark.svg" type="image/svg+xml">
 <link rel="shortcut icon" href="https://apache.org/favicons/favicon.ico">
 <meta name="description" content="{{ SITEDESC }}">
+{% if not (page is defined and page and page.slug == '404') %}
+{% if article is defined and article %}
+{% set page_canonical = SITEURL ~ '/blog/' ~ article.slug ~ '.html' %}
+{% set page_og_title = article.title ~ ' - ' ~ SITENAME %}
+{% set page_og_type = 'article' %}
+{% elif page is defined and page and page.path_no_ext != 'index' %}
+{% set page_canonical = SITEURL ~ '/' ~ (page.path_no_ext | default(page.slug)) ~ '.html' %}
+{% set page_og_title = page.title ~ ' - ' ~ SITENAME %}
+{% set page_og_type = 'website' %}
+{% else %}
+{% set page_canonical = SITEURL ~ '/' %}
+{% set page_og_title = SITENAME %}
+{% set page_og_type = 'website' %}
+{% endif %}
+<link rel="canonical" href="{{ page_canonical }}">
+<meta property="og:site_name" content="{{ SITENAME }}">
+<meta property="og:type" content="{{ page_og_type }}">
+<meta property="og:title" content="{{ page_og_title }}">
+<meta property="og:description" content="{{ SITEDESC }}">
+<meta property="og:url" content="{{ page_canonical }}">
+{% endif %}
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/fontawesome.all.min.css" rel="stylesheet">
 <link href="css/headerlink.css" rel="stylesheet">
