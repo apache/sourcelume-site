@@ -170,10 +170,11 @@ author &mdash; a producer publishes what it can actually sign for.</p>
 <li><strong><a href="https://github.com/apache/sourcelume-sample">apache/sourcelume-sample</a></strong></li>
 </ul>
 <p>The <a href="https://github.com/apache/sourcelume-sample/blob/main/README.md">README</a> contains the
-quick start: train the model, validate both records against the current schemas, and publish
-them to a Sourcelume Registry instance. Everything runs locally on a small corpus, and the
-repository README describes the current state of each step, including the steps that
-deliberately do not work yet.</p>
+quick start: train the model, validate both records against the current schemas and the
+registry, publish them via the Python plugin, and query back the resolved training data.
+Everything runs locally on a small corpus &mdash; <code>make demo-postgres</code> runs the full loop on the
+default PostgreSQL distribution (Docker only), and <code>make demo-atlas</code> runs it on the Apache
+Atlas stack.</p>
 
       <p class="sourcelume-edit-page">
         <a href="https://github.com/apache/sourcelume-site/blob/main/content/pages/sample.md">Edit this page on GitHub</a>
