@@ -58,7 +58,7 @@
           </button>
         </li>
         <li class="nav-item dropdown">
-          <a href="javascript:void(0)" class="nav-link nav-search-toggle" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-label="Search" title="Search (Ctrl+K or /)"><span class="fa-solid fa-magnifying-glass" aria-hidden="true"></span></a>
+          <button type="button" class="nav-link nav-search-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-label="Search" title="Search (Ctrl+K or /)"><span class="fa-solid fa-magnifying-glass" aria-hidden="true"></span></button>
           <ul class="search-form dropdown-menu dropdown-menu-end">
             <li>
               <div id="pagefind-search"></div>
@@ -81,13 +81,18 @@
     });
 
     const searchToggle = document.querySelector(".nav-search-toggle");
+    if (searchToggle) {
+      searchToggle.addEventListener("shown.bs.dropdown", () => {
+        document.querySelector("#pagefind-search input")?.focus();
+      });
+    }
     document.addEventListener("keydown", e => {
       const typing = /^(input|textarea|select)$/i.test(e.target.tagName) || e.target.isContentEditable;
       const k = e.key.toLowerCase();
       if (!(((e.ctrlKey || e.metaKey) && k === "k") || (k === "/" && !typing))) return;
       e.preventDefault();
       const dd = window.bootstrap?.Dropdown?.getOrCreateInstance(searchToggle);
-      dd ? dd.show() : searchToggle.click();
+      dd ? dd.show() : searchToggle?.click();
       setTimeout(() => document.querySelector("#pagefind-search input")?.focus(), 50);
     });
   })();
