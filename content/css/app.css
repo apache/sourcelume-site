@@ -519,7 +519,14 @@ hr { border: none; border-top: 1px solid var(--sourcelume-rule); margin: 2.5rem 
 }
 .search-form > li { padding: 0.6rem 0.75rem; }
 
-.nav-search-toggle { font-size: 1rem; }
+.nav-search-toggle {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
 .nav-search-toggle .fa-magnifying-glass { vertical-align: -0.05em; }
 
 /* Theme Pagefind's default UI to the site palette (vars it exposes). */
